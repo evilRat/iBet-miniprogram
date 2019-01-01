@@ -1,0 +1,39 @@
+/* pages/me/me.wxss */
+
+page {
+  background: white;
+}
+
+.user-name {
+  line-height: 100rpx;
+  text-align: center;
+  color: #aaa;
+}
+.me-button {
+  width: 80%;
+  height: 80rpx;
+  background-color: red;
+  margin-top: 20rpx;
+  line-height: 80rpx;
+  border-radius: 98rpx;
+}
+.user-avatarurl {
+  overflow:hidden;  
+  display: block;  
+  width: 160rpx;  
+  height: 160rpx;  
+  margin: 20rpx;  
+  margin-top: 50rpx;  
+  border-radius: 50%;  
+  border: 2px solid #fff;  
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+.user-userinfo {
+  border: 2rpx;
+  border-color: black;
+  line-height: 60rpx;
+  text-align: center;
+}
+.user-nickname {
+  font-size: 28rpx;
+}
