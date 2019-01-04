@@ -1,1 +1,21 @@
 /* pages/buy/buy.wxss */
+
+.betType-pic {
+  margin-left: 10rpx;
+  height: 126rpx;
+  width: 126rpx;
+}
+
+.betType-btn {
+  margin-top: 20rpx;
+  align-self: center;
+  height: 126rpx;
+  width: 90%;
+  background-color: white;
+}
+
+.betType-text {
+  margin-left: 10rpx;
+  height: 126rpx;
+  width: 70rpx;
+}

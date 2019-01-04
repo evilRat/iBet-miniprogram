@@ -4,6 +4,7 @@
     "pages/buyed/buyed",
     "pages/advice/advice",
     "pages/me/me",
+    "pages/bet/bet",
     "pages/logs/logs"
   ],
   "window":{

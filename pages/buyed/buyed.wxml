@@ -1,2 +1,11 @@
 <!--pages/buyed/buyed.wxml-->
-<text>pages/buyed/buyed.wxml</text>
+
+<view>
+  <view wx:for="{{buyedList}}">
+    <view>
+      <text>流水号：{{item.buyedId}} --{{item.buyedType}}\n</text>
+      <text> {{item.buyedBetSite}}\n</text>
+      <text>{{item.buyedNums}}\n</text>
+    </view>
+  </view>
+</view>
