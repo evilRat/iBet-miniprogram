@@ -1,0 +1,5 @@
+<!--pages/bet/bet.wxml-->
+<text class='weui-cells__title'>请投注</text>
+<view>
+  <text>{{betTypeId}}</text>
+</view>
