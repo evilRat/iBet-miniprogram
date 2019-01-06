@@ -4,7 +4,7 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
@@ -13,7 +13,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.4.2",
-	"appid": "wx7f0c2d678bb05920",
+	"appid": "wx0a2bb7689825104f",
 	"projectname": "iBet",
 	"debugOptions": {
 		"hidedInDevtools": []

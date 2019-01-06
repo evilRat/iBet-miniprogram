@@ -12,7 +12,7 @@ App({
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
         if (res.code) {
           wx.request({
-            url: 'https://localhost:8765/iBet/wxlogin',
+            url: 'http://localhost:8765/iBet/wechat/login',
             data: {
               code: res.code
             }
