@@ -1,1 +1,15 @@
 /* pages/bet/bet.wxss */
+
+.ballBox {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.ball {
+  height: 60rpx;
+  width: 60rpx;
+  text-align: center;
+  background-size: 60rpx 60rpx;
+  background-image: url("http://cdn-files.tourmade.com/im/red.png");
+}
