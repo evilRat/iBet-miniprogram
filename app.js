@@ -6,22 +6,31 @@ App({
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
 
-    // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        if (res.code) {
-          wx.request({
-            url: 'http://localhost:8765/iBet/wechat/login',
-            data: {
-              code: res.code
+    wx.checkSession({
+      success: function(){
+        console.log("111111");
+      },
+      fail: function(){
+        // 登录
+        wx.login({
+          success: res => {
+            // 发送 res.code 到后台换取 openId, sessionKey, unionId
+            if (res.code) {
+              wx.request({
+                url: 'http://localhost:8765/iBet/wechat/login',
+                data: {
+                  code: res.code,
+                  //nickName: this.globalData.userInfo.nickName
+                }
+              })
+            } else {
+              console.log('登陆失败' + res.errMsg)
             }
-          })
-        } else {
-          console.log('登陆失败' + res.errMsg)
-        }
+          }
+        })
       }
     })
+    
     // 获取用户信息
     wx.getSetting({
       success: res => {
