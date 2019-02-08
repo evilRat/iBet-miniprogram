@@ -6,10 +6,34 @@
   flex-wrap: wrap;
 }
 
-.ball {
+.redBall {
   height: 60rpx;
   width: 60rpx;
   text-align: center;
   background-size: 60rpx 60rpx;
   background-image: url("http://cdn-files.tourmade.com/im/red.png");
+}
+
+.blueBall {
+  height: 60rpx;
+  width: 60rpx;
+  text-align: center;
+  background-size: 60rpx 60rpx;
+  background-image: url("http://cdn-files.tourmade.com/im/blue.png");
+}
+
+.redBallSelected {
+  height: 60rpx;
+  width: 60rpx;
+  text-align: center;
+  background-size: 60rpx 60rpx;
+  background-image: url("http://cdn-files.tourmade.com/im/red_selected.png");
+}
+
+.blueBallSelected {
+  height: 60rpx;
+  width: 60rpx;
+  text-align: center;
+  background-size: 60rpx 60rpx;
+  background-image: url("http://cdn-files.tourmade.com/im/blue_selected.png");
 }

@@ -7,15 +7,15 @@
 <text>红球</text>
 
 <view class="ballBox">
-  <view  wx:for="{{betLoopMax}}" wx:for-index="red_index" wx:if="{{red_index}}<={{betConfig.redNum}}" wx:key="*this">
-    <view class='ball' data-value="{{betLoopMax[red_index]}}">{{betLoopMax[red_index]}}</view>
+  <view  wx:for="{{betLoopMax}}" wx:for-index="red_index" wx:if="{{red_index < betConfig.redNum}}" wx:key="*this">
+    <view class='redBall' hover-class='redBallSelected' data-ballnum="{{betLoopMax[red_index]}}" bindtap='tapBall'>{{betLoopMax[red_index]}}</view>
   </view>
 </view>
 
 <text>蓝球</text>
 
 <view class="ballBox">
-  <view  wx:for="{{betLoopMax}}" wx:for-index="blue_index" wx:if="{{blue_index}}<={{betConfig.blueNum}}" wx:key="*this">
-    <view class='ball' data-value="{{betLoopMax[blue_index]}}">{{betLoopMax[blue_index]}}</view>
+  <view  wx:for="{{betLoopMax}}" wx:for-index="blue_index" wx:if="{{blue_index < betConfig.blueNum}}" wx:key="*this">
+    <view class='redBall' hover-class='redBallSelected' data-ballnum="{{betLoopMax[blue_index]}}" bindtap='tapBall'>{{betLoopMax[blue_index]}}</view>
   </view>
 </view>

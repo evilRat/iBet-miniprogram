@@ -10,7 +10,10 @@ Page({
     betConfig: {
       "redNum": "33",
       "blueNum": "16"
-    }
+    },
+    choseBalls: [],
+    choseBallIndex: 0,
+    tapCurrentIndex: []
   },
 
   /**
@@ -69,5 +72,25 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  /**
+   * 用户点击选号
+   */
+  tapBall: function(e) {
+    var ballnum = e.currentTarget.dataset.ballnum;
+    if (this.data.choseBalls.indexOf(ballnum) == -1) {
+      this.data.choseBalls[this.data.choseBallIndex++] = ballnum;
+      this.data.tapCurrentIndex = ballnum - 1;
+      console.info("chose : " + ballnum);
+      console.info("choseBalls : " + this.data.choseBalls);
+    } else {
+      this.data.choseBalls.splice(this.data.choseBalls.indexOf(ballnum),1);
+      this.data.choseBallIndex--;
+      console.info("unchose : " + ballnum);
+      console.info("choseBalls : " + this.data.choseBalls);
+    }
+    
   }
+
 })
