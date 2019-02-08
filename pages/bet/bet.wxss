@@ -9,6 +9,7 @@
 .redBall {
   height: 60rpx;
   width: 60rpx;
+  margin: 5rpx;
   text-align: center;
   background-size: 60rpx 60rpx;
   background-image: url("http://cdn-files.tourmade.com/im/red.png");
