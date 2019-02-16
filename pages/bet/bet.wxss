@@ -5,7 +5,10 @@
   flex-direction: row;
   flex-wrap: wrap;
 }
-
+.betName {
+  font-size: 60rpx;
+  margin-left: 20rpx;
+}
 .redBall {
   height: 60rpx;
   width: 60rpx;
@@ -18,6 +21,7 @@
 .blueBall {
   height: 60rpx;
   width: 60rpx;
+  margin: 5rpx;
   text-align: center;
   background-size: 60rpx 60rpx;
   background-image: url("http://cdn-files.tourmade.com/im/blue.png");
@@ -37,4 +41,21 @@
   text-align: center;
   background-size: 60rpx 60rpx;
   background-image: url("http://cdn-files.tourmade.com/im/blue_selected.png");
+}
+
+.threeBalls {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.bet-button {
+  width: 60%;
+  height: 80rpx;
+  border-color: red;
+  border-width: 1rpx;
+  background-color: red;
+  margin-top: 20rpx;
+  line-height: 80rpx;
+  border-radius: 95rpx;
 }

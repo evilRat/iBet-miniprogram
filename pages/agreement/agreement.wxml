@@ -1,0 +1,5 @@
+<!--pages/agreement/agreement.wxml-->
+<view class="page__hd">
+    <view class="page__title">相关条款</view>
+    <view class="page__desc">完成注册才可使用本程序</view>
+  </view>

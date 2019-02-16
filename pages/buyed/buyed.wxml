@@ -1,11 +1,13 @@
 <!--pages/buyed/buyed.wxml-->
 
 <view>
-  <view wx:for="{{buyedList}}" wx:key="*this">
+  <view wx:for="{{orderList}}" wx:key="*this">
     <view>
-      <text>流水号：{{item.buyedId}} --{{item.buyedType}}\n</text>
-      <text> {{item.buyedBetSite}}\n</text>
-      <text>{{item.buyedNums}}\n</text>
+      <text>流水号：{{item.id}} --{{betConfig[item.betId].name}}\n</text>
+      <text> {{userBetSites[item.betSiteId-1].name}}\n</text>
+      <text>红球：{{item.redBalls}}\n</text>
+      <text>蓝球：{{item.blueBalls}}\n</text>
+      <view class="divLine"></view>
     </view>
   </view>
 </view>

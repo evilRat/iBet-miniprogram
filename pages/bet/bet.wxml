@@ -1,21 +1,82 @@
 <!--pages/bet/bet.wxml-->
-<text class='weui-cells__title'>请投注</text>
+<text class='weui-cells__title'>请投注:</text>
+<view class="betName">
+  <text>{{betConfig[betTypeId-1].name}}</text>
+</view>
+
+<!-- 3d -->
+<view wx:if="{{betTypeId == 3}}">
+  <view wx:for="123" wx:key="*this" wx:for-index="digitIndex">
+    <view>
+      <view>第{{item}}位:</view>
+      <view class="ballBox">
+        <view wx:for="0123456789" class="threeBalls" wx:key="*this">
+          <view class='redBall' hover-class='redBallSelected' data-digit="{{digitIndex}}" data-ballnum="{{item}}" bindtap='tap3DBall'>{{item}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 七乐彩或双色球 -->
+<view wx:else>
+  <text wx:if="{{betConfig[betTypeId-1].redNum > 0}}">红球:</text>
+
+  <view class="ballBox">
+    <view wx:for="{{betLoopMax}}" wx:for-index="red_index" wx:if="{{red_index < betConfig[betTypeId-1].redNum}}" wx:key="*this">
+      <view class='redBall' hover-class='redBallSelected' data-ballnum="{{betLoopMax[red_index]}}" bindtap='tapRedBall'>{{betLoopMax[red_index]}}</view>
+    </view>
+  </view>
+
+  <text wx:if="{{betConfig[betTypeId-1].blueNum > 0}}">蓝球:</text>
+
+  <view class="ballBox">
+    <view wx:for="{{betLoopMax}}" wx:for-index="blue_index" wx:if="{{blue_index < betConfig[betTypeId-1].blueNum}}" wx:key="*this">
+      <view class='blueBall' hover-class='blueBallSelected' data-ballnum="{{betLoopMax[blue_index]}}" bindtap='tapBlueBall'>{{betLoopMax[blue_index]}}</view>
+    </view>
+  </view>
+</view>
+
 <view>
-  <text>{{betTypeId}}</text>
-</view>
-
-<text>红球</text>
-
-<view class="ballBox">
-  <view  wx:for="{{betLoopMax}}" wx:for-index="red_index" wx:if="{{red_index < betConfig.redNum}}" wx:key="*this">
-    <view class='redBall' hover-class='redBallSelected' data-ballnum="{{betLoopMax[red_index]}}" bindtap='tapBall'>{{betLoopMax[red_index]}}</view>
+  <view>
+    <text class='weui-cells__title'>已选择:</text>
   </view>
-</view>
-
-<text>蓝球</text>
-
-<view class="ballBox">
-  <view  wx:for="{{betLoopMax}}" wx:for-index="blue_index" wx:if="{{blue_index < betConfig.blueNum}}" wx:key="*this">
-    <view class='redBall' hover-class='redBallSelected' data-ballnum="{{betLoopMax[blue_index]}}" bindtap='tapBall'>{{betLoopMax[blue_index]}}</view>
+  <text wx:if="{{betConfig[betTypeId-1].name != '3D'}}">红球:</text>
+  <view class="ballBox">
+    <view wx:for="{{choseRedBalls}}" wx:for-index="choseRedBallIndex" wx:key="*this">
+      <view class='redBallSelected'>{{choseRedBalls[choseRedBallIndex]}}</view>
+    </view>
   </view>
+  <text wx:if="{{betConfig[betTypeId-1].name == '双色球'}}">蓝球:</text>
+  <view class="ballBox">
+    <view wx:for="{{choseBlueBalls}}" wx:for-index="choseBlueBallIndex" wx:key="*this">
+      <view class='blueBallSelected'>{{choseBlueBalls[choseBlueBallIndex]}}</view>
+    </view>
+  </view>
+  <view wx:if="{{betConfig[betTypeId-1].name == '3D'}}">
+
+    <view>第1位:</view>
+    <view class="ballBox">
+      <view wx:for="{{chosethreeDFirst}}" wx:for-index="threeDFirstIndex" wx:key="*this">
+        <view class='redBallSelected'>{{chosethreeDFirst[threeDFirstIndex]}}</view>
+      </view>
+    </view>
+
+    <view>第2位:</view>
+    <view class="ballBox">
+      <view wx:for="{{chosethreeDSecond}}" wx:for-index="threeDSecondIndex" wx:key="*this">
+        <view class='redBallSelected'>{{chosethreeDSecond[threeDSecondIndex]}}</view>
+      </view>
+    </view>
+
+    <view>第3位:</view>
+    <view class="ballBox">
+      <view wx:for="{{chosethreeDThird}}" wx:for-index="threeDThirdIndex" wx:key="*this">
+        <view class='redBallSelected'>{{chosethreeDThird[threeDThirdIndex]}}</view>
+      </view>
+    </view>
+  </view>
+
+  <button class="bet-button" bindtap="orderSubmit">投注</button>
+
 </view>

@@ -5,7 +5,9 @@
     "pages/advice/advice",
     "pages/me/me",
     "pages/bet/bet",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/register/register",
+    "pages/agreement/agreement"
   ],
   "window":{
     "backgroundTextStyle":"light",
