@@ -7,20 +7,23 @@ Page({
    */
   data: {
     orderList: [{
-      "buyedId": "1000000001",
-      "buyedType": "七乐彩",
-      "buyedBetSite": "翠福园投注站",
-      "buyedNums": "1,12,15,19,20,31-06"
+      "id": "1000000001",
+      "betId": "2",
+      "betSiteId": "1",
+      "redBalls": "1,12,15,19,20,31",
+      "blueBalls": "6"
     }, {
-      "buyedId": "1000000001",
-      "buyedType": "双色球",
-      "buyedBetSite": "草房投注站",
-      "buyedNums": "1,12,15,19,20,31-06"
+      "id": "1000000001",
+      "betId": "双色球",
+      "betSiteId": "草房投注站",
+      "redBalls": "1,12,15,19,20,31",
+      "blueBalls": ""
     }, {
-      "buyedId": "1000000001",
-      "buyedType": "3D",
-      "buyedBetSite": "常营投注站",
-      "buyedNums": "1,12,15,19,20,31-06"
+      "id": "1000000001",
+      "betId": "3D",
+      "betSiteId": "常营投注站",
+      "redBalls": "[2,3],[4,5],[6,7]",
+      "blueBalls": ""
     }],
     betConfig: [{
       "name": "双色球",
@@ -48,7 +51,7 @@ Page({
     this.setData({
       userBetSites: app.globalData.userBetSites
     })
-    
+
 
   },
 
@@ -74,8 +77,19 @@ Page({
       success(getUserOrderRes) {
         console.log(getUserOrderRes)
         if (getUserOrderRes.data.rtnCode == 0) {
+          var sourceUserOrderList = getUserOrderRes.data.userOrderList;
+          console.log(sourceUserOrderList)
+          for (let index in sourceUserOrderList) {
+            let redBalls = JSON.parse(sourceUserOrderList[index].redBalls)
+            let blueBalls = JSON.parse(sourceUserOrderList[index].blueBalls)
+            sourceUserOrderList[index].redBalls = redBalls;
+            sourceUserOrderList[index].blueBalls = blueBalls;
+            console.log(redBalls)
+            console.log(blueBalls)
+            sourceUserOrderList[index].id = app.PrefixInteger(sourceUserOrderList[index].id, 10)
+          }
           that.setData({
-            orderList: getUserOrderRes.data.userOrderList
+            orderList: sourceUserOrderList
           })
         } else {
           wx.showModal({

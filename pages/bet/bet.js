@@ -219,7 +219,7 @@ Page({
           data: {
             userId: app.globalData.userId,
             betSiteId: this.data.betSiteId,
-            betId: this.data.betSiteId,
+            betId: this.data.betTypeId,
             redBalls: this.data.choseRedBalls,
             blueBalls: this.data.choseBlueBalls,
             times: this.data.times
@@ -257,7 +257,7 @@ Page({
           data: {
             userId: app.globalData.userId,
             betSiteId: this.data.betSiteId,
-            betId: this.data.betSiteId,
+            betId: this.data.betTypeId,
             redBalls: this.data.choseRedBalls,
             blueBalls: this.data.choseBlueBalls,
             times: this.data.times
@@ -296,7 +296,7 @@ Page({
           data: {
             userId: app.globalData.userId,
             betSiteId: this.data.betSiteId,
-            betId: this.data.betSiteId,
+            betId: this.data.betTypeId,
             redBalls: threeDBalls,
             blueBalls: this.data.choseBlueBalls,
             times: this.data.times

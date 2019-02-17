@@ -5,3 +5,28 @@
  width: 100%;
  height: 5rpx;
 }
+
+.redBallSelected {
+  height: 60rpx;
+  width: 60rpx;
+  text-align: center;
+  background-size: 60rpx 60rpx;
+  background-image: url("http://cdn-files.tourmade.com/im/red_selected.png");
+}
+
+.blueBallSelected {
+  height: 60rpx;
+  width: 60rpx;
+  text-align: center;
+  background-size: 60rpx 60rpx;
+  background-image: url("http://cdn-files.tourmade.com/im/blue_selected.png");
+}
+
+.flexRowFather {
+  display: flex;
+  flex-direction: row
+}
+
+.flexRowSon {
+  display: flex;
+}
