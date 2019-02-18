@@ -150,183 +150,206 @@ Page({
     var ballnum = e.currentTarget.dataset.ballnum;
     var digit = e.currentTarget.dataset.digit;
 
-      switch(digit) {
-        case 0:
-          if (this.data.chosethreeDFirst.indexOf(Number(ballnum)) == -1) {
-            this.data.chosethreeDFirst[this.data.chosethreeDFirstIndex++] = Number(ballnum);
-            this.data.tapCurrentIndex = ballnum - 1;
-            this.setData({
-              chosethreeDFirst: this.data.chosethreeDFirst
-            })
-            console.info("chosethreeDFirst : " + ballnum);
-            console.info("chosethreeDFirstBalls : " + this.data.chosethreeDFirst);
-          } else {
-            this.data.chosethreeDFirst.splice(this.data.chosethreeDFirst.indexOf(Number(ballnum)), 1);
-            this.data.chosethreeDFirstIndex--;
-            this.setData({
-              chosethreeDFirst: this.data.chosethreeDFirst
-            })
-            console.info("unchosethreeDFirst : " + ballnum);
-            console.info("chosethreeDFirstBalls : " + this.data.chosethreeDFirst);
-          }
+    switch (digit) {
+      case 0:
+        if (this.data.chosethreeDFirst.indexOf(Number(ballnum)) == -1) {
+          this.data.chosethreeDFirst[this.data.chosethreeDFirstIndex++] = Number(ballnum);
+          this.data.tapCurrentIndex = ballnum - 1;
+          this.setData({
+            chosethreeDFirst: this.data.chosethreeDFirst
+          })
+          console.info("chosethreeDFirst : " + ballnum);
+          console.info("chosethreeDFirstBalls : " + this.data.chosethreeDFirst);
+        } else {
+          this.data.chosethreeDFirst.splice(this.data.chosethreeDFirst.indexOf(Number(ballnum)), 1);
+          this.data.chosethreeDFirstIndex--;
+          this.setData({
+            chosethreeDFirst: this.data.chosethreeDFirst
+          })
+          console.info("unchosethreeDFirst : " + ballnum);
+          console.info("chosethreeDFirstBalls : " + this.data.chosethreeDFirst);
+        }
         break;
-        case 1:
-          if (this.data.chosethreeDSecond.indexOf(Number(ballnum)) == -1) {
-            this.data.chosethreeDSecond[this.data.chosethreeDSecondIndex++] = Number(ballnum);
-            this.data.tapCurrentIndex = ballnum - 1;
-            this.setData({
-              chosethreeDSecond: this.data.chosethreeDSecond
-            })
-            console.info("chosethreeDSecond : " + ballnum);
-            console.info("chosethreeDSecondBalls : " + this.data.chosethreeDSecond);
-          } else {
-            this.data.chosethreeDSecond.splice(this.data.chosethreeDSecond.indexOf(Number(ballnum)), 1);
-            this.data.chosethreeDSecondIndex--;
-            this.setData({
-              chosethreeDSecond: this.data.chosethreeDSecond
-            })
-            console.info("unchosethreeDSecond : " + ballnum);
-            console.info("chosethreeDSecondBalls : " + this.data.chosethreeDSecond);
-          }
+      case 1:
+        if (this.data.chosethreeDSecond.indexOf(Number(ballnum)) == -1) {
+          this.data.chosethreeDSecond[this.data.chosethreeDSecondIndex++] = Number(ballnum);
+          this.data.tapCurrentIndex = ballnum - 1;
+          this.setData({
+            chosethreeDSecond: this.data.chosethreeDSecond
+          })
+          console.info("chosethreeDSecond : " + ballnum);
+          console.info("chosethreeDSecondBalls : " + this.data.chosethreeDSecond);
+        } else {
+          this.data.chosethreeDSecond.splice(this.data.chosethreeDSecond.indexOf(Number(ballnum)), 1);
+          this.data.chosethreeDSecondIndex--;
+          this.setData({
+            chosethreeDSecond: this.data.chosethreeDSecond
+          })
+          console.info("unchosethreeDSecond : " + ballnum);
+          console.info("chosethreeDSecondBalls : " + this.data.chosethreeDSecond);
+        }
         break;
-        case 2:
-          if (this.data.chosethreeDThird.indexOf(Number(ballnum)) == -1) {
-            this.data.chosethreeDThird[this.data.chosethreeDThirdIndex++] = Number(ballnum);
-            this.data.tapCurrentIndex = ballnum - 1;
-            this.setData({
-              chosethreeDThird: this.data.chosethreeDThird
-            })
-            console.info("chosethreeDThird : " + ballnum);
-            console.info("chosethreeDThirdBalls : " + this.data.chosethreeDThird);
-          } else {
-            this.data.chosethreeDThird.splice(this.data.chosethreeDThird.indexOf(Number(ballnum)), 1);
-            this.data.chosethreeDThirdIndex--;
-            this.setData({
-              chosethreeDThird: this.data.chosethreeDThird
-            })
-            console.info("unchosethreeDThird : " + ballnum);
-            console.info("chosethreeDThirdBalls : " + this.data.chosethreeDThird);
-          }
+      case 2:
+        if (this.data.chosethreeDThird.indexOf(Number(ballnum)) == -1) {
+          this.data.chosethreeDThird[this.data.chosethreeDThirdIndex++] = Number(ballnum);
+          this.data.tapCurrentIndex = ballnum - 1;
+          this.setData({
+            chosethreeDThird: this.data.chosethreeDThird
+          })
+          console.info("chosethreeDThird : " + ballnum);
+          console.info("chosethreeDThirdBalls : " + this.data.chosethreeDThird);
+        } else {
+          this.data.chosethreeDThird.splice(this.data.chosethreeDThird.indexOf(Number(ballnum)), 1);
+          this.data.chosethreeDThirdIndex--;
+          this.setData({
+            chosethreeDThird: this.data.chosethreeDThird
+          })
+          console.info("unchosethreeDThird : " + ballnum);
+          console.info("chosethreeDThirdBalls : " + this.data.chosethreeDThird);
+        }
         break;
-      }
+    }
   },
 
   orderSubmit: function(e) {
     switch (this.data.betTypeId) {
       case "1": //双色球
-        wx.request({
-          url: 'http://localhost:8765/iBet/order/newOrder',
-          data: {
-            userId: app.globalData.userId,
-            betSiteId: this.data.betSiteId,
-            betId: this.data.betTypeId,
-            redBalls: this.data.choseRedBalls,
-            blueBalls: this.data.choseBlueBalls,
-            times: this.data.times
-          },
-          success(orderRes) {
-            console.log(orderRes);
-            switch (orderRes.data.rtnCode) {
-              case "999":
-                wx.showModal({
-                  title: '抱歉！',
-                  content: '系统问题' + orderRes.data.rtnMessage,
-                })
-                break;
-              case "0":
-                wx.switchTab({
-                  url: '../buyed/buyed',
-                })
-                break;
-              case "1":
-                wx.showModal({
-                  title: '抱歉！',
-                  content: '系统问题' + orderRes.data.rtnMessage,
-                })
-                break;
-            }
-          },
-          fail(err) {
+        if ((this.data.choseRedBalls).length != 6 || this.data.choseBlueBalls.length != 1) {
+          wx.showModal({
+            title: '提示',
+            content: '一注双色球由6个红球和1个蓝球组成',
+          })
+        } else {
+          wx.request({
+            url: 'http://localhost:8765/iBet/order/newOrder',
+            data: {
+              userId: app.globalData.userId,
+              betSiteId: this.data.betSiteId,
+              betId: this.data.betTypeId,
+              redBalls: this.data.choseRedBalls,
+              blueBalls: this.data.choseBlueBalls,
+              times: this.data.times
+            },
+            success(orderRes) {
+              console.log(orderRes);
+              switch (orderRes.data.rtnCode) {
+                case "999":
+                  wx.showModal({
+                    title: '抱歉！',
+                    content: '系统问题' + orderRes.data.rtnMessage,
+                  })
+                  break;
+                case "0":
+                  wx.switchTab({
+                    url: '../buyed/buyed',
+                  })
+                  break;
+                case "1":
+                  wx.showModal({
+                    title: '抱歉！',
+                    content: '系统问题' + orderRes.data.rtnMessage,
+                  })
+                  break;
+              }
+            },
+            fail(err) {
 
-          }
-        })
+            }
+          })
+        }
         break;
       case "2": //七乐彩
-        wx.request({
-          url: 'http://localhost:8765/iBet/order/newOrder',
-          data: {
-            userId: app.globalData.userId,
-            betSiteId: this.data.betSiteId,
-            betId: this.data.betTypeId,
-            redBalls: this.data.choseRedBalls,
-            blueBalls: this.data.choseBlueBalls,
-            times: this.data.times
-          },
-          success(orderRes) {
-            console.log(orderRes);
-            switch (orderRes.data.rtnCode) {
-              case "999":
-                wx.showModal({
-                  title: '抱歉！',
-                  content: '系统问题' + orderRes.data.rtnMessage,
-                })
-                break;
-              case "0":
-                wx.switchTab({
-                  url: '../buyed/buyed',
-                })
-                break;
-              case "1":
-                wx.showModal({
-                  title: '抱歉！',
-                  content: '系统问题' + orderRes.data.rtnMessage,
-                })
-                break;
-            }
-          },
-          fail(err) {
+        if ((this.data.choseRedBalls).length != 7 || (this.data.choseBlueBalls).length != 0) {
+          wx.showModal({
+            title: '提示',
+            content: '一注七乐彩由7个红球',
+          })
+        } else {
+          wx.request({
+            url: 'http://localhost:8765/iBet/order/newOrder',
+            data: {
+              userId: app.globalData.userId,
+              betSiteId: this.data.betSiteId,
+              betId: this.data.betTypeId,
+              redBalls: this.data.choseRedBalls,
+              blueBalls: this.data.choseBlueBalls,
+              times: this.data.times
+            },
+            success(orderRes) {
+              console.log(orderRes);
+              switch (orderRes.data.rtnCode) {
+                case "999":
+                  wx.showModal({
+                    title: '抱歉！',
+                    content: '系统问题' + orderRes.data.rtnMessage,
+                  })
+                  break;
+                case "0":
+                  wx.switchTab({
+                    url: '../buyed/buyed',
+                  })
+                  break;
+                case "1":
+                  wx.showModal({
+                    title: '抱歉！',
+                    content: '系统问题' + orderRes.data.rtnMessage,
+                  })
+                  break;
+              }
+            },
+            fail(err) {
 
-          }
-        })
+            }
+          })
+        }
         break;
       case "3": //3D
-        var threeDBalls = new Array(this.data.chosethreeDFirst,this.data.chosethreeDSecond,this.data.chosethreeDThird);
-        wx.request({
-          url: 'http://localhost:8765/iBet/order/newOrder',
-          data: {
-            userId: app.globalData.userId,
-            betSiteId: this.data.betSiteId,
-            betId: this.data.betTypeId,
-            redBalls: threeDBalls,
-            blueBalls: this.data.choseBlueBalls,
-            times: this.data.times
-          },
-          success(orderRes) {
-            console.log(orderRes);
-            switch (orderRes.data.rtnCode) {
-              case "999":
-                wx.showModal({
-                  title: '抱歉！',
-                  content: '系统问题' + orderRes.data.rtnMessage,
-                })
-                break;
-              case "0":
-                wx.switchTab({
-                  url: '../buyed/buyed',
-                })
-                break;
-              case "1":
-                wx.showModal({
-                  title: '抱歉！',
-                  content: '系统问题' + orderRes.data.rtnMessage,
-                })
-                break;
-            }
-          },
-          fail(err) {
+        if ((this.data.chosethreeDFirst).length != 1 || (this.data.chosethreeDSecond).length != 1 || (this.data.chosethreeDThird).length != 1) {
+          wx.showModal({
+            title: '提示',
+            content: '一注3D由三位0～9的数字组成',
+          })
+        } else {
+          var threeDBalls = new Array(this.data.chosethreeDFirst, this.data.chosethreeDSecond, this.data.chosethreeDThird);
+          console.log(threeDBalls)
+          wx.request({
+            url: 'http://localhost:8765/iBet/order/newOrder',
+            data: {
+              userId: app.globalData.userId,
+              betSiteId: this.data.betSiteId,
+              betId: this.data.betTypeId,
+              redBalls: threeDBalls,
+              blueBalls: this.data.choseBlueBalls,
+              times: this.data.times
+            },
+            success(orderRes) {
+              console.log(threeDBalls)
+              console.log(orderRes);
+              switch (orderRes.data.rtnCode) {
+                case "999":
+                  wx.showModal({
+                    title: '抱歉！',
+                    content: '系统问题' + orderRes.data.rtnMessage,
+                  })
+                  break;
+                case "0":
+                  wx.switchTab({
+                    url: '../buyed/buyed',
+                  })
+                  break;
+                case "1":
+                  wx.showModal({
+                    title: '抱歉！',
+                    content: '系统问题' + orderRes.data.rtnMessage,
+                  })
+                  break;
+              }
+            },
+            fail(err) {
 
-          }
-        })
+            }
+          })
+        }
         break;
     }
   }

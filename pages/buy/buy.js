@@ -9,10 +9,10 @@ Page({
     isNotAuthorized: null,
     betSiteIndex: 0,
     betSites: [{
-        "id": "1",
-        "name": "翠福园投注站",
-        "betTypes": [1,2,3]
-      }],
+      "id": "1",
+      "name": "翠福园投注站",
+      "betTypes": [1, 2, 3]
+    }],
     betConfig: [{
       "name": "双色球",
       "picName": "shuangseqiu",
@@ -51,7 +51,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
-    var that=this
+    var that = this
     // 登录
     wx.login({
       success: res => {
@@ -126,7 +126,23 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    var that = this
+    wx.request({
+      url: 'http://localhost:8765/iBet/wechat/betSites',
+      data: {
+        userId: app.globalData.userId
+      },
+      success(betSitesRes) {
+        console.log("betSites_app.globalData.userId=" + app.globalData.userId)
+        if (betSitesRes.data.betSites != null && betSitesRes.data.betSites != "") {
+          that.setData({
+            betSites: betSitesRes.data.betSites
+          })
+          app.globalData.userBetSites = betSitesRes.data.betSites
+          console.log(that.data.betSites)
+        }
+      }
+    })
   },
 
   /**
@@ -173,11 +189,18 @@ Page({
 
   clickBetTypeBtn: function(e) {
     console.log("betType-id: " + e.currentTarget.dataset.betTypeId)
-    var betTypeId = e.currentTarget.dataset.betTypeId;
-    var betSiteIndex = Number(this.data.betSiteIndex) + 1;
-    wx.navigateTo({
-      url: '/pages/bet/bet?betTypeId=' + betTypeId + "&betSiteId=" + betSiteIndex
-    })
+    if (this.data.betSites[this.data.betSiteIndex].balance < 2) {
+      wx.showModal({
+        title: '提示',
+        content: '您在此投注站的余额不足，请在此投注站充值，或选择余额大于2元的投注站进行投注',
+      })
+    } else {
+      var betTypeId = e.currentTarget.dataset.betTypeId;
+      var betSiteIndex = Number(this.data.betSiteIndex) + 1;
+      wx.navigateTo({
+        url: '/pages/bet/bet?betTypeId=' + betTypeId + "&betSiteId=" + betSiteIndex
+      })
+    }
   },
 
   bindGetUserInfo: function(e) {
