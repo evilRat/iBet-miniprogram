@@ -8,21 +8,10 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     isNotAuthorized: null,
     betSiteIndex: 0,
-    betSites: [{
-      "id": "1",
-      "name": "翠福园投注站",
-      "betTypes": [1, 2, 3]
-    }],
-    betConfig: [{
-      "name": "双色球",
-      "picName": "shuangseqiu",
-    }, {
-      "name": "七乐彩",
-      "picName": "qilecai",
-    }, {
-      "name": "3D",
-      "picName": "3D"
-    }]
+    betIndex: 0,
+    betSites: [],
+    bets: [],
+    userSite: null,
   },
   /**
    * 生命周期函数--监听页面加载
@@ -65,7 +54,7 @@ Page({
             // 发送 res.code 到后台换取 openId, sessionKey, unionId
             if (res.code) {
               wx.request({
-                url: 'http://localhost:8765/iBet/wechat/login',
+                url: app.serverUrl + '/wechat/login',
                 data: {
                   jsCode: res.code,
                   iv: userRes.iv,
@@ -90,18 +79,22 @@ Page({
                       break;
                     case '1':
                       wx.request({
-                        url: 'http://localhost:8765/iBet/wechat/betSites',
+                        url: app.serverUrl + '/wechat/betSites',
                         data: {
                           userId: app.globalData.userId
                         },
                         success(betSitesRes) {
                           console.log("betSites_app.globalData.userId=" + app.globalData.userId)
-                          if (betSitesRes.data.betSites != null && betSitesRes.data.betSites != "") {
+                          if (!!betSitesRes.data.data) {
                             that.setData({
-                              betSites: betSitesRes.data.betSites
+                              betSites: betSitesRes.data.data
                             })
                             app.globalData.userBetSites = betSitesRes.data.betSites
                             console.log(that.data.betSites)
+                            // 获取玩法
+                            that.getBetByTypes(that.data.betSites[that.data.betSiteIndex].betTypes)
+                            // 获取用户在当前投注站的配置
+                            that.getUserSiteBySiteId()
                           }
                         }
                       })
@@ -127,8 +120,11 @@ Page({
    */
   onShow: function() {
     var that = this
+    if (!app.globalData.userId) {
+      return;
+    }
     wx.request({
-      url: 'http://localhost:8765/iBet/wechat/betSites',
+      url: app.serverUrl + '/wechat/betSites',
       data: {
         userId: app.globalData.userId
       },
@@ -140,6 +136,10 @@ Page({
           })
           app.globalData.userBetSites = betSitesRes.data.betSites
           console.log(that.data.betSites)
+          // 获取玩法
+          that.getBetByTypes(that.data.betSites[that.data.betSiteIndex].betTypes)
+          // 获取用户在当前投注站的配置
+          that.getUserSiteBySiteId()
         }
       }
     })
@@ -180,10 +180,62 @@ Page({
 
   },
   bindBetSiteChange: function(e) {
+    let that = this
     console.log('picker betSite 发生选择改变，携带值为', e.detail.value);
-
-    this.setData({
+    that.setData({
       betSiteIndex: e.detail.value
+    })
+    // 获取玩法
+    that.getBetByTypes(that.data.betSites[that.data.betSiteIndex].betTypes)
+    // 获取用户在当前投注站的配置
+    that.getUserSiteBySiteId()
+  },
+
+  /**
+   * 根据betTypes获取玩法
+   * @param {*} e 
+   */
+  getBetByTypes: function(types) {
+    let that = this
+    // 获取对应投注站的玩法的信息
+    wx.request({
+      url: app.serverUrl + '/wechat/bet',
+      method: "GET",
+      data: {
+        ids: types
+      },
+      success(betRes) {
+        if (!!betRes.data) {
+          that.setData({
+            bets: betRes.data.data
+          })
+          console.log('根据选择投注站获取了它的玩法:' + JSON.stringify(that.data.betSites))
+        }
+      }
+    })
+  },
+  /**
+   * 获取用户在当前投注站的信息
+   * @param {*} e 
+   */
+  getUserSiteBySiteId: function() {
+    let that = this
+    // 获取对应投注站的玩法的信息
+    wx.request({
+      url: app.serverUrl + '/wechat/userSite',
+      method: "GET",
+      data: {
+        userId: app.globalData.userId,
+        siteId: that.data.betSites[that.data.betSiteIndex].id,
+      },
+      success(userSiteRes) {
+        if (!!userSiteRes.data) {
+          that.setData({
+            userSite: userSiteRes.data.data
+          })
+          console.log('当前投注站的用户信息:' + JSON.stringify(that.data.userSite))
+        }
+      }
     })
   },
 

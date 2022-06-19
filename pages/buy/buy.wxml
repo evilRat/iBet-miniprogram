@@ -26,28 +26,28 @@
           <view class="weui-label">投注站</view>
         </view>
         <view class="weui-cell__bd">
-          <picker bindchange="bindBetSiteChange" value="{{betSiteIndex}}" range-key="{{'name'}}" range='{{betSites}}'>
-            <view class="weui-select weui-select_in-select-after">{{betSites[betSiteIndex].name}}</view>
+          <picker bindchange="bindBetSiteChange" value="{{betSiteIndex}}" range-key="{{'siteName'}}" range='{{betSites}}'>
+            <view class="weui-select weui-select_in-select-after">{{betSites[betSiteIndex].siteName}}</view>
           </picker>
         </view>
       </view>
     </view>
     <view>
       <view class="weui-cells__title">余额
-      <text style='color:red;font-size:50rpx'>
-        {{betSites[betSiteIndex].balance}}
-      </text>
+        <text style='color:red;font-size:50rpx'>
+          {{userSite.balance}}
+        </text>
       </view>
     </view>
 
     <view>
       <text class="weui-cells__title">可投注玩法</text>
     </view>
-    <view wx:for="{{betSites[betSiteIndex].betTypes}}" wx:key="key">
+    <view wx:for="{{bets}}" wx:for-index="betIndex" wx:key="id">
       <view>
-        <text hidden='true' class='betType-text'>{{betConfig[item-1].name}}</text>
+        <text hidden='true' class='betType-text'>{{bets[betIndex].betName}}</text>
         <button class='betType-btn' bindtap='clickBetTypeBtn' data-bet-type-id="{{item}}">
-          <image class='betType-pic' src='images/{{betConfig[item-1].picName}}.png'></image>
+          <image class='betType-pic' src='images/{{bets[betIndex].icon}}.png'></image>
         </button>
       </view>
     </view>

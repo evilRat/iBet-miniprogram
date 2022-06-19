@@ -137,7 +137,7 @@ Page({
       })
     } else {
       wx.request({
-        url: 'http://localhost:8765/iBet/wechat/register',
+        url: app.serverUrl + '/wechat/register',
         data: {
           userId: app.globalData.userId,
           userName: this.data.realName,

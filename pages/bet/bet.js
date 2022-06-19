@@ -221,7 +221,7 @@ Page({
           })
         } else {
           wx.request({
-            url: 'http://localhost:8765/iBet/order/newOrder',
+            url: app.serverUrl + '/order/newOrder',
             data: {
               userId: app.globalData.userId,
               betSiteId: this.data.betSiteId,
@@ -266,7 +266,7 @@ Page({
           })
         } else {
           wx.request({
-            url: 'http://localhost:8765/iBet/order/newOrder',
+            url: app.serverUrl + '/order/newOrder',
             data: {
               userId: app.globalData.userId,
               betSiteId: this.data.betSiteId,
@@ -313,7 +313,7 @@ Page({
           var threeDBalls = new Array(this.data.chosethreeDFirst, this.data.chosethreeDSecond, this.data.chosethreeDThird);
           console.log(threeDBalls)
           wx.request({
-            url: 'http://localhost:8765/iBet/order/newOrder',
+            url: app.serverUrl + '/order/newOrder',
             data: {
               userId: app.globalData.userId,
               betSiteId: this.data.betSiteId,

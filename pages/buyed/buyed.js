@@ -69,7 +69,7 @@ Page({
     var that = this;
     //获取用户订单
     wx.request({
-      url: 'http://localhost:8765/iBet/order/userOrder',
+      url: app.serverUrl + '/order/userOrder',
       data: {
         userId: app.globalData.userId,
 

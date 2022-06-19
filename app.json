@@ -1,5 +1,5 @@
 {
-  "pages":[
+  "pages": [
     "pages/buy/buy",
     "pages/buyed/buyed",
     "pages/advice/advice",
@@ -9,28 +9,33 @@
     "pages/register/register",
     "pages/agreement/agreement"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#FF3030",
     "navigationBarTitleText": "iBet",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle": "black"
   },
   "tabBar": {
-    "list": [{
-      "pagePath": "pages/buy/buy",
-      "text": "购买",
-      "iconPath": "images/buy.png",
-      "selectedIconPath": "images/buy_selected.png"
-    },{
-      "pagePath": "pages/buyed/buyed",
-      "text": "已购买",
-      "iconPath": "images/buyed.png",
-      "selectedIconPath": "images/buyed_selected.png"
-    },{
-      "pagePath": "pages/me/me",
-      "text": "我",
-      "iconPath": "images/me.png",
-      "selectedIconPath": "images/me_selected.png"
-    }]
-  }
+    "list": [
+      {
+        "pagePath": "pages/buy/buy",
+        "text": "购买",
+        "iconPath": "images/buy.png",
+        "selectedIconPath": "images/buy_selected.png"
+      },
+      {
+        "pagePath": "pages/buyed/buyed",
+        "text": "已购买",
+        "iconPath": "images/buyed.png",
+        "selectedIconPath": "images/buyed_selected.png"
+      },
+      {
+        "pagePath": "pages/me/me",
+        "text": "我",
+        "iconPath": "images/me.png",
+        "selectedIconPath": "images/me_selected.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
 }

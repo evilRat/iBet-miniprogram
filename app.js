@@ -1,4 +1,5 @@
 //app.js
+import config from 'config.js';
 App({
   onLaunch: function() {
     var that = this;
@@ -33,12 +34,13 @@ App({
   },
   PrefixInteger: function(num, n) {
     return(Array(n).join(0) + num).slice(-n);
-},
+  },
 
   globalData: {
     userInfo: null,
     isNotAuthorized: null,
     userId: null,
     userBetSites: null
-  }
+  },
+  serverUrl: config.serverUrl
 })
