@@ -40,7 +40,7 @@ App({
     userInfo: null,
     isNotAuthorized: null,
     userId: null,
-    userBetSites: null
+    currentSite: null
   },
   serverUrl: config.serverUrl
 })

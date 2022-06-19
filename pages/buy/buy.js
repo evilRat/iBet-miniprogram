@@ -89,7 +89,6 @@ Page({
                             that.setData({
                               betSites: betSitesRes.data.data
                             })
-                            app.globalData.userBetSites = betSitesRes.data.betSites
                             console.log(that.data.betSites)
                             // 获取玩法
                             that.getBetByTypes(that.data.betSites[that.data.betSiteIndex].betTypes)
@@ -134,7 +133,6 @@ Page({
           that.setData({
             betSites: betSitesRes.data.betSites
           })
-          app.globalData.userBetSites = betSitesRes.data.betSites
           console.log(that.data.betSites)
           // 获取玩法
           that.getBetByTypes(that.data.betSites[that.data.betSiteIndex].betTypes)
@@ -189,6 +187,8 @@ Page({
     that.getBetByTypes(that.data.betSites[that.data.betSiteIndex].betTypes)
     // 获取用户在当前投注站的配置
     that.getUserSiteBySiteId()
+    // 记录当前投注站
+    app.globalData.currentSite = that.data.betSites[that.data.betSiteIndex]
   },
 
   /**
@@ -240,19 +240,11 @@ Page({
   },
 
   clickBetTypeBtn: function(e) {
-    console.log("betType-id: " + e.currentTarget.dataset.betTypeId)
-    if (this.data.betSites[this.data.betSiteIndex].balance < 2) {
-      wx.showModal({
-        title: '提示',
-        content: '您在此投注站的余额不足，请在此投注站充值，或选择余额大于2元的投注站进行投注',
-      })
-    } else {
-      var betTypeId = e.currentTarget.dataset.betTypeId;
-      var betSiteIndex = Number(this.data.betSiteIndex) + 1;
-      wx.navigateTo({
-        url: '/pages/bet/bet?betTypeId=' + betTypeId + "&betSiteId=" + betSiteIndex
-      })
-    }
+    console.log("betType-id: " + JSON.stringify(e))
+    let currentBet = e.currentTarget.dataset.currentBet;
+    wx.navigateTo({
+      url: '/pages/bet/bet?currentBetId=' + currentBet.id
+    })
   },
 
   bindGetUserInfo: function(e) {

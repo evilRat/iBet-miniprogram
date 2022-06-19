@@ -11,7 +11,9 @@
   width: 60rpx;
   text-align: center;
   background-size: 60rpx 60rpx;
-  background-image: url("http://cdn-files.tourmade.com/im/red_selected.png");
+  background-color: red;
+  border-radius: 50%;
+  /* background-image: url('../../images/red_selected.png'); */
 }
 
 .blueBallSelected {
@@ -19,7 +21,9 @@
   width: 60rpx;
   text-align: center;
   background-size: 60rpx 60rpx;
-  background-image: url("http://cdn-files.tourmade.com/im/blue_selected.png");
+  background-color: blue;
+  border-radius: 50%;
+  /* background-image: url("../../images/blue_selected.png"); */
 }
 
 .flexRowFather {

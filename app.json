@@ -9,10 +9,11 @@
     "pages/register/register",
     "pages/agreement/agreement"
   ],
+  "lazyCodeLoading": "requiredComponents",
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#FF3030",
-    "navigationBarTitleText": "iBet",
+    "navigationBarTitleText": "彩民乐",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {

@@ -1,32 +1,15 @@
 // pages/bet/bet.js
 var app = getApp();
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
-    betTypeId: 0,
-    betSiteId: 0,
+    currentBetId: null,
+    currentBet: null,
     canOrder: true,
     betLoopMax: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35],
     threeBalls: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-    betConfig: [{
-      "name": "双色球",
-      "picName": "shuangseqiu",
-      "redNum": "33",
-      "blueNum": "16"
-    }, {
-      "name": "七乐彩",
-      "picName": "qilecai",
-      "redNum": "30",
-      "blueNum": "0"
-    }, {
-      "name": "3D",
-      "picName": "3D",
-      "redNum": "0",
-      "blueNum": "0"
-    }],
     choseRedBalls: [],
     choseRedBallIndex: 0,
     choseBlueBalls: [],
@@ -46,8 +29,38 @@ Page({
    */
   onLoad: function(options) {
     this.setData({
-      betTypeId: options.betTypeId,
-      betSiteId: options.betSiteId
+      currentBetId: options.currentBetId,
+    })
+    this.getBetInfo()
+  },
+
+  /**
+   * 获取玩法配置
+   */
+  getBetInfo: function() {
+    let that = this;
+    wx.request({
+      url: app.serverUrl + '/wechat/bet/' + that.data.currentBetId,
+      data: null,
+      success(betRes) {
+        if (!!betRes.data) {
+          if (!!betRes.data.data) {
+            that.setData ({
+              currentBet: betRes.data.data
+            })
+          } else {
+            wx.showModal({
+              title: '抱歉！',
+              content: '系统问题:' + betRes.data.message,
+            })
+          }
+        } else {
+          wx.showModal({
+            title: '抱歉！',
+            content: '系统问题:' + betRes.errMsg,
+          })
+        }
+      }
     })
   },
 
@@ -212,7 +225,7 @@ Page({
   },
 
   orderSubmit: function(e) {
-    switch (this.data.betTypeId) {
+    switch (this.data.currentBetId) {
       case "1": //双色球
         if ((this.data.choseRedBalls).length != 6 || this.data.choseBlueBalls.length != 1) {
           wx.showModal({
@@ -224,8 +237,8 @@ Page({
             url: app.serverUrl + '/order/newOrder',
             data: {
               userId: app.globalData.userId,
-              betSiteId: this.data.betSiteId,
-              betId: this.data.betTypeId,
+              betSiteId: app.globalData.currentSite.id,
+              betId: this.data.currentBet,
               redBalls: this.data.choseRedBalls,
               blueBalls: this.data.choseBlueBalls,
               times: this.data.times
@@ -269,8 +282,8 @@ Page({
             url: app.serverUrl + '/order/newOrder',
             data: {
               userId: app.globalData.userId,
-              betSiteId: this.data.betSiteId,
-              betId: this.data.betTypeId,
+              betSiteId: app.globalData.currentSite.id,
+              betId: this.data.currentBet,
               redBalls: this.data.choseRedBalls,
               blueBalls: this.data.choseBlueBalls,
               times: this.data.times
@@ -316,8 +329,8 @@ Page({
             url: app.serverUrl + '/order/newOrder',
             data: {
               userId: app.globalData.userId,
-              betSiteId: this.data.betSiteId,
-              betId: this.data.betTypeId,
+              betSiteId: app.globalData.currentSite.id,
+              betId: this.data.currentBet,
               redBalls: threeDBalls,
               blueBalls: this.data.choseBlueBalls,
               times: this.data.times

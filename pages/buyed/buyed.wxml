@@ -1,42 +1,43 @@
 <!--pages/buyed/buyed.wxml-->
 
 <view>
-  <view wx:for="{{orderList}}" wx:key="item.id" wx:for-index="orderIndex">
-    <view wx:if="{{item.betId != 3}}">
-      <text>流水号：{{item.id}} --{{betConfig[item.betId-1].name}}\n</text>
-      <text> {{userBetSites[item.betSiteId-1].name}}\n</text>
+  <view wx:for="{{orderList}}" wx:key="id" wx:for-index="orderIndex">
+    <!-- 区分3D和其他，展示不同 -->
+    <view wx:if="{{item.id != 3}}">
+      <text>流水号：{{item.orderCode}} --{{item.betName}}\n</text>
+      <text> {{item.siteName}}\n</text>
       <text>红球：\n</text>
       <view class='flexRowFather'>
-      <view wx:for="{{item.redBalls}}" wx:for-item="redBall" wx:key="redBall">
-        <view>
-          <view class='redBallSelected'>{{redBall}}</view>
+        <view wx:for="{{item.redList}}" wx:for-item="redBall" wx:key="redBall">
+          <view>
+            <view class='redBallSelected'>{{redBall}}</view>
+          </view>
         </view>
       </view>
-    </view>
-    <view wx:if="{{item.blueBalls != ''}}">
-      <text>蓝球：\n</text>
-      <view class='flexRowFather'>
-        <view wx:for="{{item.blueBalls}}" wx:for-item="blueBall" wx:key="blueBall">
-          <view class='blueBallSelected'>{{blueBall}}</view>
+      <view wx:if="{{!!item.blueList}}">
+        <text>蓝球：\n</text>
+        <view class='flexRowFather'>
+          <view wx:for="{{item.blueList}}" wx:for-item="blueBall" wx:key="blueBall">
+            <view class='blueBallSelected'>{{blueBall}}</view>
+          </view>
         </view>
       </view>
+      <view class="divLine"></view>
     </view>
-    <view class="divLine"></view>
+    <view wx:else>
+      <!-- 3d -->
+      <text>流水号：{{item.orderCode}} --{{betConfig[item.betId-1].name}}\n</text>
+      <text> {{userBetSites[item.betSiteId-1].name}}\n</text>
+      <view wx:for="{{item.redBalls}}" wx:for-item="digitRedBalls" wx:for-index="digitIndex" wx:key="digitIndex">
+        <text>第{{digitIndex+1}}位：</text>
+        <view class='flexRowFather'>
+          <view wx:for="{{digitRedBalls}}" wx:for-item="ball" wx:key="ball">
+            <view class='redBallSelected'>{{ball}}</view>
+          </view>
+        </view>
+      </view>
+      <text wx:if="{{item.blueBalls != ''}}">蓝球：{{item.blueBalls}}\n</text>
+      <view class="divLine"></view>
+    </view>
   </view>
-  <view wx:else>
-    <!-- 3d -->
-    <text>流水号：{{item.id}} --{{betConfig[item.betId-1].name}}\n</text>
-    <text> {{userBetSites[item.betSiteId-1].name}}\n</text>
-    <view wx:for="{{item.redBalls}}" wx:for-item="digitRedBalls" wx:for-index="digitIndex" wx:key="digitIndex">
-      <text>第{{digitIndex+1}}位：</text>
-      <view class='flexRowFather'>
-        <view wx:for="{{digitRedBalls}}" wx:for-item="ball" wx:key="ball">
-          <view class='redBallSelected'>{{ball}}</view>
-        </view>
-      </view>
-    </view>
-    <text wx:if="{{item.blueBalls != ''}}">蓝球：{{item.blueBalls}}\n</text>
-    <view class="divLine"></view>
-  </view>
-</view>
 </view>
