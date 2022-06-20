@@ -1,0 +1,23 @@
+<!--pages/register/register.wxml-->
+<view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
+  <view class="page__hd">
+    <view class="page__title"><font>体验版</font>
+    </view>
+    <view class="page__desc">仅可使用分享功能</view>
+  </view>
+
+  <view>
+    <text class="weui-cells__title">可投注玩法</text>
+  </view>
+  <view wx:for="{{bets}}" wx:for-index="betIndex" wx:key="id">
+    <view>
+      <text hidden='true' class='betType-text'>{{bets[betIndex].betName}}</text>
+      <button class='betType-btn' bindtap='clickBetTypeBtn' data-current-bet="{{item}}">
+        <image class='betType-pic' src='images/{{bets[betIndex].icon}}.png'></image>
+      </button>
+    </view>
+  </view>
+  <view class="weui-btn-area">
+    <button class="weui-btn" type="primary" bindtap="share">分享</button>
+  </view>
+</view>

@@ -7,7 +7,8 @@
     "pages/bet/bet",
     "pages/logs/logs",
     "pages/register/register",
-    "pages/agreement/agreement"
+    "pages/agreement/agreement",
+    "pages/experience/experience"
   ],
   "lazyCodeLoading": "requiredComponents",
   "window": {

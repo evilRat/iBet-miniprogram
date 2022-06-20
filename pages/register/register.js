@@ -67,6 +67,15 @@ Page({
   onShareAppMessage: function() {
 
   },
+  /**
+   * 尝试体验版
+   * @param {} e 
+   */
+  tryExperienceVersion: function() {
+    wx.redirectTo({
+      url: '../experience/experience',
+    })
+  },
   bindAgreeChange: function(e) {
     this.setData({
       isAgree: !!e.detail.value.length

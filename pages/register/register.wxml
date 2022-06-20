@@ -1,13 +1,13 @@
 <!--pages/register/register.wxml-->
 <view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
   <view class="page__hd">
-    <view class="page__title">注册</view>
+    <view class="page__title">注册使用<font style="font-weight: bold;">专业版</font></view>
     <view class="page__desc">完成注册方可使用本程序</view>
   </view>
   <view class="weui-cells weui-cells_after-title">
     <view class="weui-cell weui-cell_input">
       <view class="weui-cell__hd">
-        <view class="weui-label">真实姓名</view>
+        <view class="weui-label">姓名</view>
       </view>
       <view class="weui-cell__bd">
         <input class="weui-input" placeholder="请输入真实姓名" bindblur='bindRealNameChange'/>
@@ -57,5 +57,6 @@
 
   <view class="weui-btn-area">
     <button class="weui-btn" type="primary" bindtap="registerSubmit" disabled="{{canSubmit}}" >确定</button>
+    <button type="default" bindtap="tryExperienceVersion" >尝试体验版</button>
   </view>
 </view>
