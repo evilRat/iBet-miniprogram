@@ -17,6 +17,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    // 判断是否为无服务器，第一版先上线，没有server
+    if(app.noServer) {
+      wx.reLaunch({
+        url: '/pages/experience/experience'
+      })
+    }
     console.log("app.globalData.isNot=" + app.globalData.isNotAuthorized)
     if (app.globalData.isNotAuthorized == null) {
       console.log("app.globalData.isNotAuthorized is null")
