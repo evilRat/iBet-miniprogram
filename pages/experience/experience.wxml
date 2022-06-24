@@ -17,7 +17,4 @@
       </button>
     </view>
   </view>
-  <view class="weui-btn-area">
-    <button class="weui-btn" type="primary" bindtap="share">分享</button>
-  </view>
 </view>

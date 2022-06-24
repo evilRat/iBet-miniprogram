@@ -5,6 +5,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    readOnly: true,
+    noServer: null,
     currentBetId: null,
     currentBet: null,
     canOrder: true,
@@ -27,17 +29,34 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
-    this.setData({
-      currentBetId: options.currentBetId,
-    })
-    this.getBetInfo()
+  onLoad: function (options) {
+    if (!!options.params) {
+      // 如果携带参数，直接展示
+      debugger
+      let params = JSON.parse(decodeURIComponent(options.params))
+      this.setData({
+        currentBetId: params.currentBetId,
+        currentBet: params.currentBet,
+        choseRedBalls: params.choseRedBalls,
+        choseBlueBalls: params.choseBlueBalls,
+        chosethreeDFirst: params.chosethreeDFirst,
+        chosethreeDSecond: params.chosethreeDSecond,
+        chosethreeDThird: params.chosethreeDThird,
+        noServer: app.noServer
+      })
+    } else {
+      this.setData({
+        currentBetId: options.currentBetId,
+        noServer: app.noServer
+      })
+      this.getBetInfo()
+    }
   },
 
   /**
    * 获取玩法配置
    */
-  getBetInfo: function() {
+  getBetInfo: function () {
     let that = this;
     wx.request({
       url: app.serverUrl + '/wechat/bet/' + that.data.currentBetId,
@@ -45,7 +64,7 @@ Page({
       success(betRes) {
         if (!!betRes.data) {
           if (!!betRes.data.data) {
-            that.setData ({
+            that.setData({
               currentBet: betRes.data.data
             })
           } else {
@@ -67,56 +86,69 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
+  onReady: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
+  onHide: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
+  onUnload: function () {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
-
+  onShareAppMessage: function () {
+    console.log('分享')
+    let params = {
+      currentBetId: this.data.currentBetId,
+      currentBet: this.data.currentBet,
+      choseRedBalls: this.data.choseRedBalls,
+      choseBlueBalls: this.data.choseBlueBalls,
+      chosethreeDFirst: this.data.chosethreeDFirst,
+      chosethreeDSecond: this.data.chosethreeDSecond,
+      chosethreeDThird: this.data.chosethreeDThird,
+    }
+    return {
+      title: "分享",
+      path: 'pages/bet/bet?params=' + encodeURIComponent(JSON.stringify(params))
+    }
   },
 
   /**
    * 用户点击选号
    */
-  tapRedBall: function(e) {
+  tapRedBall: function (e) {
     var ballnum = e.currentTarget.dataset.ballnum;
     if (this.data.choseRedBalls.indexOf(ballnum) == -1) {
       this.data.choseRedBalls[this.data.choseRedBallIndex++] = ballnum;
@@ -138,7 +170,7 @@ Page({
 
   },
 
-  tapBlueBall: function(e) {
+  tapBlueBall: function (e) {
     var ballnum = e.currentTarget.dataset.ballnum;
     if (this.data.choseBlueBalls.indexOf(ballnum) == -1) {
       this.data.choseBlueBalls[this.data.choseBlueBallIndex++] = ballnum;
@@ -159,7 +191,7 @@ Page({
     }
 
   },
-  tap3DBall: function(e) {
+  tap3DBall: function (e) {
     var ballnum = e.currentTarget.dataset.ballnum;
     var digit = e.currentTarget.dataset.digit;
 
@@ -224,7 +256,7 @@ Page({
     }
   },
 
-  orderSubmit: function(e) {
+  orderSubmit: function (e) {
     switch (this.data.currentBetId) {
       case "1": //双色球
         if ((this.data.choseRedBalls).length != 6 || this.data.choseBlueBalls.length != 1) {

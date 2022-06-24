@@ -76,8 +76,7 @@
       </view>
     </view>
   </view>
-
-  <button class="bet-button-red" bindtap="orderSubmit">投注</button>
-  <button class="bet-button-blue" bindtap="share">分享</button>
+  <button class="bet-button-red" bindtap="orderSubmit" wx:if="{{!noServer}}">投注</button>
+  <button class="bet-button-blue" open-type="share">分享</button>
 
 </view>
