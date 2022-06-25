@@ -13,7 +13,7 @@
     <view>
       <text hidden='true' class='betType-text'>{{bets[betIndex].betName}}</text>
       <button class='betType-btn' bindtap='clickBetTypeBtn' data-current-bet="{{item}}">
-        <image class='betType-pic' src='images/{{bets[betIndex].icon}}.png'></image>
+        <image class='betType-pic' src='../../images/{{bets[betIndex].icon}}.png'></image>
       </button>
     </view>
   </view>

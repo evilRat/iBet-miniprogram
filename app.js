@@ -5,11 +5,11 @@ App({
   onLaunch: function() {
     var that = this;
     // 判断是否为无服务器，第一版先上线，没有server
-    if(config.noServer) {
-      wx.reLaunch({
-        url: '/pages/experience/experience'
-      })
-    }
+    // if(config.noServer) {
+    //   wx.reLaunch({
+    //     url: '/pages/experience/experience'
+    //   })
+    // }
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())

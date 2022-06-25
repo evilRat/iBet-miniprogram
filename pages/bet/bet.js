@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    readOnly: true,
+    isShared: true,
     noServer: null,
     currentBetId: null,
     currentBet: null,
@@ -32,7 +32,6 @@ Page({
   onLoad: function (options) {
     if (!!options.params) {
       // 如果携带参数，直接展示
-      debugger
       let params = JSON.parse(decodeURIComponent(options.params))
       this.setData({
         currentBetId: params.currentBetId,
@@ -42,12 +41,14 @@ Page({
         chosethreeDFirst: params.chosethreeDFirst,
         chosethreeDSecond: params.chosethreeDSecond,
         chosethreeDThird: params.chosethreeDThird,
-        noServer: app.noServer
+        noServer: app.noServer,
+        isShared: true
       })
     } else {
       this.setData({
         currentBetId: options.currentBetId,
-        noServer: app.noServer
+        noServer: app.noServer,
+        isShared: false
       })
       this.getBetInfo()
     }
@@ -58,29 +59,93 @@ Page({
    */
   getBetInfo: function () {
     let that = this;
-    wx.request({
-      url: app.serverUrl + '/wechat/bet/' + that.data.currentBetId,
-      data: null,
-      success(betRes) {
-        if (!!betRes.data) {
-          if (!!betRes.data.data) {
-            that.setData({
-              currentBet: betRes.data.data
-            })
+    if (app.noServer) {
+      switch (that.data.currentBetId) {
+        case "1":
+          that.setData({
+            currentBet: {
+              "id": 1,
+              "betName": "双色球",
+              "redBallNum": 6,
+              "blueBallNum": 1,
+              "redBallRange": 33,
+              "blueBallRange": 16,
+              "icon": "shuangseqiu",
+              "createTime": "2022-05-01T12:12:21+08:00",
+              "updateTime": "2022-05-01T12:12:21+08:00",
+              "createUser": "1",
+              "createUserName": "孔征",
+              "updateUser": "1",
+              "updateUserName": "孔征"
+            }
+          })
+          break
+        case "2":
+          that.setData({
+            currentBet: {
+              "id": 2,
+              "betName": "七乐彩",
+              "redBallNum": 7,
+              "blueBallNum": 0,
+              "redBallRange": 30,
+              "blueBallRange": 0,
+              "icon": "qilecai",
+              "createTime": "2022-05-01T12:12:21+08:00",
+              "updateTime": "2022-05-01T12:12:21+08:00",
+              "createUser": "1",
+              "createUserName": "孔征",
+              "updateUser": "1",
+              "updateUserName": "孔征"
+            }
+          })
+          break;
+        case "3":
+          that.setData({
+            currentBet: {
+              "id": 3,
+              "betName": "3D",
+              "redBallNum": 3,
+              "blueBallNum": 0,
+              "redBallRange": 0,
+              "blueBallRange": 0,
+              "icon": "3D",
+              "createTime": "2022-05-01T12:12:21+08:00",
+              "updateTime": "2022-05-01T12:12:21+08:00",
+              "createUser": "1",
+              "createUserName": "孔征",
+              "updateUser": "1",
+              "updateUserName": "孔征"
+            }
+          })
+          break;
+        default:
+          break;
+      }
+    } else {
+      wx.request({
+        url: app.serverUrl + '/wechat/bet/' + that.data.currentBetId,
+        data: null,
+        success(betRes) {
+          if (!!betRes.data) {
+            if (!!betRes.data.data) {
+              that.setData({
+                currentBet: betRes.data.data
+              })
+            } else {
+              wx.showModal({
+                title: '抱歉！',
+                content: '系统问题:' + betRes.data.message,
+              })
+            }
           } else {
             wx.showModal({
               title: '抱歉！',
-              content: '系统问题:' + betRes.data.message,
+              content: '系统问题:' + betRes.errMsg,
             })
           }
-        } else {
-          wx.showModal({
-            title: '抱歉！',
-            content: '系统问题:' + betRes.errMsg,
-          })
         }
-      }
-    })
+      })
+    }
   },
 
   /**
