@@ -8,6 +8,7 @@
 .betName {
   font-size: 60rpx;
   margin-left: 20rpx;
+  text-align: center;
 }
 .redBall {
   height: 60rpx;
@@ -61,6 +62,11 @@
   line-height: 80rpx;
   border-radius: 95rpx;
   color: white;
+}
+
+.pic {
+  width: 200px;
+  height: 200px;
 }
 
 .bet-button-blue {

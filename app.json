@@ -1,14 +1,8 @@
 {
   "pages": [
-    "pages/buy/buy",
-    "pages/buyed/buyed",
-    "pages/advice/advice",
+    "pages/experience/experience",
     "pages/me/me",
-    "pages/bet/bet",
-    "pages/logs/logs",
-    "pages/register/register",
-    "pages/agreement/agreement",
-    "pages/experience/experience"
+    "pages/bet/bet"
   ],
   "lazyCodeLoading": "requiredComponents",
   "window": {
@@ -20,16 +14,10 @@
   "tabBar": {
     "list": [
       {
-        "pagePath": "pages/buy/buy",
-        "text": "购买",
+        "pagePath": "pages/experience/experience",
+        "text": "机选",
         "iconPath": "images/buy.png",
         "selectedIconPath": "images/buy_selected.png"
-      },
-      {
-        "pagePath": "pages/buyed/buyed",
-        "text": "已购买",
-        "iconPath": "images/buyed.png",
-        "selectedIconPath": "images/buyed_selected.png"
       },
       {
         "pagePath": "pages/me/me",

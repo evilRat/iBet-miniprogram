@@ -7,7 +7,7 @@
   </view>
 
   <view>
-    <text class="weui-cells__title">可投注玩法</text>
+    <text class="weui-cells__title">试试手气！</text>
   </view>
   <view wx:for="{{bets}}" wx:for-index="betIndex" wx:key="id">
     <view>

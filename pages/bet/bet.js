@@ -5,8 +5,13 @@ Page({
    * 页面的初始数据
    */
   data: {
+    options: null,
     isShared: true,
-    noServer: null,
+    isPrintShare: false,
+    owner: null,
+    orderCode: null,
+    lotteryImg: null,
+    lotteryCode: null,
     currentBetId: null,
     currentBet: null,
     canOrder: true,
@@ -23,16 +28,31 @@ Page({
     chosethreeDFirstIndex: 0,
     chosethreeDSecondIndex: 0,
     chosethreeDThirdIndex: 0,
-    times: 1
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.showLoading({
+      title: '加载中',
+    })
+    this.setData({
+      options: options,
+    })
+    wx.cloud.init()
     if (!!options.params) {
       // 如果携带参数，直接展示
       let params = JSON.parse(decodeURIComponent(options.params))
+      console.log("share params: " + JSON.stringify(params))
+      // 要用缓存中的openid，因为用户通过分享打开的话，不走onLaunch
+      let curOpenid = wx.getStorageSync('curOpenid')
+      // 如果携带参数，并且已经上传了彩票的话，就只有当前用户可以看了，其他用户返回首页
+      if (!!params.orderCode && curOpenid != params.owner) {
+        wx.navigateTo({
+          url: '/pages/experience/experience'
+        })
+      }
       this.setData({
         currentBetId: params.currentBetId,
         currentBet: params.currentBet,
@@ -41,110 +61,104 @@ Page({
         chosethreeDFirst: params.chosethreeDFirst,
         chosethreeDSecond: params.chosethreeDSecond,
         chosethreeDThird: params.chosethreeDThird,
-        noServer: app.noServer,
-        isShared: true
+        isShared: true,
+        isPrintShare: params.isPrintShare,
+        orderCode: params.orderCode,
       })
+      // orderCode不为空，说明是要打印的，尝试获取lotteryImg
+      if (!!this.data.orderCode) {
+        console.log("before download fileId = " + 'cloud://' + app.globalData.cloudEnvId + '.' + app.globalData.cloudStorageId + '/' + this.data.orderCode)
+        wx.cloud.downloadFile({
+          fileID: 'cloud://' + app.globalData.cloudEnvId + '.' + app.globalData.cloudStorageId + '/' + this.data.orderCode, // 文件 ID
+          success: res => {
+            // 返回临时文件路径
+            console.log(res.tempFilePath)
+            this.setData({
+              lotteryImg: res.tempFilePath
+            })
+            console.log("lotteryImg value set: " + this.data.lotteryImg)
+          },
+          fail: console.error
+        })
+      }
     } else {
       this.setData({
         currentBetId: options.currentBetId,
-        noServer: app.noServer,
         isShared: false
       })
-      this.getBetInfo()
+      this.init()
+      this.getRandom()
     }
+    wx.hideLoading({
+      success: (res) => {},
+    })
   },
 
   /**
    * 获取玩法配置
    */
-  getBetInfo: function () {
+  init: function () {
     let that = this;
-    if (app.noServer) {
-      switch (that.data.currentBetId) {
-        case "1":
-          that.setData({
-            currentBet: {
-              "id": 1,
-              "betName": "双色球",
-              "redBallNum": 6,
-              "blueBallNum": 1,
-              "redBallRange": 33,
-              "blueBallRange": 16,
-              "icon": "shuangseqiu",
-              "createTime": "2022-05-01T12:12:21+08:00",
-              "updateTime": "2022-05-01T12:12:21+08:00",
-              "createUser": "1",
-              "createUserName": "孔征",
-              "updateUser": "1",
-              "updateUserName": "孔征"
-            }
-          })
-          break
-        case "2":
-          that.setData({
-            currentBet: {
-              "id": 2,
-              "betName": "七乐彩",
-              "redBallNum": 7,
-              "blueBallNum": 0,
-              "redBallRange": 30,
-              "blueBallRange": 0,
-              "icon": "qilecai",
-              "createTime": "2022-05-01T12:12:21+08:00",
-              "updateTime": "2022-05-01T12:12:21+08:00",
-              "createUser": "1",
-              "createUserName": "孔征",
-              "updateUser": "1",
-              "updateUserName": "孔征"
-            }
-          })
-          break;
-        case "3":
-          that.setData({
-            currentBet: {
-              "id": 3,
-              "betName": "3D",
-              "redBallNum": 3,
-              "blueBallNum": 0,
-              "redBallRange": 0,
-              "blueBallRange": 0,
-              "icon": "3D",
-              "createTime": "2022-05-01T12:12:21+08:00",
-              "updateTime": "2022-05-01T12:12:21+08:00",
-              "createUser": "1",
-              "createUserName": "孔征",
-              "updateUser": "1",
-              "updateUserName": "孔征"
-            }
-          })
-          break;
-        default:
-          break;
-      }
-    } else {
-      wx.request({
-        url: app.serverUrl + '/wechat/bet/' + that.data.currentBetId,
-        data: null,
-        success(betRes) {
-          if (!!betRes.data) {
-            if (!!betRes.data.data) {
-              that.setData({
-                currentBet: betRes.data.data
-              })
-            } else {
-              wx.showModal({
-                title: '抱歉！',
-                content: '系统问题:' + betRes.data.message,
-              })
-            }
-          } else {
-            wx.showModal({
-              title: '抱歉！',
-              content: '系统问题:' + betRes.errMsg,
-            })
+    switch (that.data.currentBetId) {
+      case "1":
+        that.setData({
+          currentBet: {
+            "id": 1,
+            "betName": "双色球",
+            "redBallNum": 6,
+            "blueBallNum": 1,
+            "redBallRange": 33,
+            "blueBallRange": 16,
+            "icon": "shuangseqiu",
+            "createTime": "2022-05-01T12:12:21+08:00",
+            "updateTime": "2022-05-01T12:12:21+08:00",
+            "createUser": "1",
+            "createUserName": "孔征",
+            "updateUser": "1",
+            "updateUserName": "孔征"
           }
-        }
-      })
+        })
+        break
+      case "2":
+        that.setData({
+          currentBet: {
+            "id": 2,
+            "betName": "七乐彩",
+            "redBallNum": 7,
+            "blueBallNum": 0,
+            "redBallRange": 30,
+            "blueBallRange": 0,
+            "icon": "qilecai",
+            "createTime": "2022-05-01T12:12:21+08:00",
+            "updateTime": "2022-05-01T12:12:21+08:00",
+            "createUser": "1",
+            "createUserName": "孔征",
+            "updateUser": "1",
+            "updateUserName": "孔征"
+          }
+        })
+        break;
+      case "3":
+        that.setData({
+          currentBet: {
+            "id": 3,
+            "betName": "3D",
+            "redBallNum": 3,
+            "blueBallNum": 0,
+            "redBallRange": 0,
+            "blueBallRange": 0,
+            "icon": "3D",
+            "createTime": "2022-05-01T12:12:21+08:00",
+            "updateTime": "2022-05-01T12:12:21+08:00",
+            "createUser": "1",
+            "createUserName": "孔征",
+            "updateUser": "1",
+            "updateUserName": "孔征"
+          }
+        })
+        break;
+      default:
+        break;
     }
   },
 
@@ -193,8 +207,19 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function (options) {
     console.log('分享')
+    let title = '看看怎么样？'
+    let owner = null
+    if (options.target.dataset.info == '1') {
+      // 打印，要生成orderCode
+      let orderCode = app.getUuid()
+      this.setData({
+        orderCode: orderCode
+      })
+      title = '帮我打印'
+      owner = app.globalData.userInfo.openid
+    }
     let params = {
       currentBetId: this.data.currentBetId,
       currentBet: this.data.currentBet,
@@ -203,11 +228,68 @@ Page({
       chosethreeDFirst: this.data.chosethreeDFirst,
       chosethreeDSecond: this.data.chosethreeDSecond,
       chosethreeDThird: this.data.chosethreeDThird,
+      owner: owner,
+      orderCode: this.data.orderCode,
+      isPrintShare: options.target.dataset.info == '1'
     }
+    console.log("share params: " + JSON.stringify(params))
     return {
-      title: "分享",
+      title: title,
       path: 'pages/bet/bet?params=' + encodeURIComponent(JSON.stringify(params))
     }
+  },
+
+  getRandom: function () {
+    let that = this
+    switch (that.data.currentBetId) {
+      case "1":
+        // 双色球
+        let shuangRed = that.getRandomBalls(that.data.currentBet.redBallNum, 1, that.data.currentBet.redBallRange)
+        let shuangBlue = that.getRandomBalls(that.data.currentBet.blueBallNum, 1, that.data.currentBet.blueBallRange)
+        that.setData({
+          choseRedBalls: shuangRed,
+          choseBlueBalls: shuangBlue
+        })
+        break;
+      case "2":
+        let qiRed = that.getRandomBalls(that.data.currentBet.redBallNum, 1, that.data.currentBet.redBallRange)
+        that.setData({
+          choseRedBalls: qiRed
+        })
+        break;
+      case "3":
+        let san1 = that.getRandomBalls(1, 0, 9)
+        let san2 = that.getRandomBalls(1, 0, 9)
+        let san3 = that.getRandomBalls(1, 0, 9)
+        that.setData({
+          chosethreeDFirst: san1,
+          chosethreeDSecond: san2,
+          chosethreeDThird: san3
+        })
+        break;
+    }
+  },
+
+  /**
+   * 
+   * @param {一共多少个数字}} num 
+   * @param {最小值} min 
+   * @param {最大值} max 
+   */
+  getRandomBalls: function (num, min, max) {
+    let balls = []
+    for (let i = 0; i < num;) {
+      let curBall = Math.floor(Math.random() * (max - min + 1)) + min;
+      if (balls.indexOf(curBall) === -1) {
+        // 随机出的数字不存在，才能加入数组
+        balls.push(curBall)
+        i++
+      }
+    }
+    balls.sort(function (a, b) {
+      return a - b
+    });
+    return balls;
   },
 
   /**
@@ -321,147 +403,48 @@ Page({
     }
   },
 
-  orderSubmit: function (e) {
-    switch (this.data.currentBetId) {
-      case "1": //双色球
-        if ((this.data.choseRedBalls).length != 6 || this.data.choseBlueBalls.length != 1) {
-          wx.showModal({
-            title: '提示',
-            content: '一注双色球由6个红球和1个蓝球组成',
-          })
-        } else {
-          wx.request({
-            url: app.serverUrl + '/order/newOrder',
-            data: {
-              userId: app.globalData.userId,
-              betSiteId: app.globalData.currentSite.id,
-              betId: this.data.currentBet,
-              redBalls: this.data.choseRedBalls,
-              blueBalls: this.data.choseBlueBalls,
-              times: this.data.times
-            },
-            success(orderRes) {
-              console.log(orderRes);
-              switch (orderRes.data.rtnCode) {
-                case "999":
-                  wx.showModal({
-                    title: '抱歉！',
-                    content: '系统问题' + orderRes.data.rtnMessage,
-                  })
-                  break;
-                case "0":
-                  wx.switchTab({
-                    url: '../buyed/buyed',
-                  })
-                  break;
-                case "1":
-                  wx.showModal({
-                    title: '抱歉！',
-                    content: '系统问题' + orderRes.data.rtnMessage,
-                  })
-                  break;
+  upload: function () {
+    let that = this
+    console.log("upload click")
+    wx.chooseMedia({
+      camera: 'back',
+      count: 1,
+      mediaType: ['image'],
+      sourceType: ['album', 'camera'],
+      success(res) {
+        console.log("chooseMedia res:" + JSON.stringify(res))
+        debugger
+        if (!!res && !!res.tempFiles && !!res.tempFiles[0] && !!res.tempFiles[0].tempFilePath) {
+          wx.cloud.uploadFile({
+            cloudPath: that.data.orderCode,
+            filePath: res.tempFiles[0].tempFilePath,
+            success: uploadRes => {
+              wx.showLoading({
+                title: '上传中',
+              })
+              console.log("uploadFile res: " + JSON.stringify(uploadRes))
+              if (!!uploadRes.fileID) {
+                // 弹窗成功
+                wx.showToast({
+                  title: '上传成功',
+                  icon: 'success',
+                  duration: 1000
+                })
+                that.onLoad(that.data.options)
+              } else {
+                // 失败
+                wx.showToast({
+                  title: '上传失败',
+                  icon: 'success',
+                  duration: 1000
+                })
               }
             },
-            fail(err) {
-
-            }
+            fail: console.error
           })
         }
-        break;
-      case "2": //七乐彩
-        if ((this.data.choseRedBalls).length != 7 || (this.data.choseBlueBalls).length != 0) {
-          wx.showModal({
-            title: '提示',
-            content: '一注七乐彩由7个红球',
-          })
-        } else {
-          wx.request({
-            url: app.serverUrl + '/order/newOrder',
-            data: {
-              userId: app.globalData.userId,
-              betSiteId: app.globalData.currentSite.id,
-              betId: this.data.currentBet,
-              redBalls: this.data.choseRedBalls,
-              blueBalls: this.data.choseBlueBalls,
-              times: this.data.times
-            },
-            success(orderRes) {
-              console.log(orderRes);
-              switch (orderRes.data.rtnCode) {
-                case "999":
-                  wx.showModal({
-                    title: '抱歉！',
-                    content: '系统问题' + orderRes.data.rtnMessage,
-                  })
-                  break;
-                case "0":
-                  wx.switchTab({
-                    url: '../buyed/buyed',
-                  })
-                  break;
-                case "1":
-                  wx.showModal({
-                    title: '抱歉！',
-                    content: '系统问题' + orderRes.data.rtnMessage,
-                  })
-                  break;
-              }
-            },
-            fail(err) {
-
-            }
-          })
-        }
-        break;
-      case "3": //3D
-        if ((this.data.chosethreeDFirst).length != 1 || (this.data.chosethreeDSecond).length != 1 || (this.data.chosethreeDThird).length != 1) {
-          wx.showModal({
-            title: '提示',
-            content: '一注3D由三位0～9的数字组成',
-          })
-        } else {
-          var threeDBalls = new Array(this.data.chosethreeDFirst, this.data.chosethreeDSecond, this.data.chosethreeDThird);
-          console.log(threeDBalls)
-          wx.request({
-            url: app.serverUrl + '/order/newOrder',
-            data: {
-              userId: app.globalData.userId,
-              betSiteId: app.globalData.currentSite.id,
-              betId: this.data.currentBet,
-              redBalls: threeDBalls,
-              blueBalls: this.data.choseBlueBalls,
-              times: this.data.times
-            },
-            success(orderRes) {
-              console.log(threeDBalls)
-              console.log(orderRes);
-              switch (orderRes.data.rtnCode) {
-                case "999":
-                  wx.showModal({
-                    title: '抱歉！',
-                    content: '系统问题' + orderRes.data.rtnMessage,
-                  })
-                  break;
-                case "0":
-                  wx.switchTab({
-                    url: '../buyed/buyed',
-                  })
-                  break;
-                case "1":
-                  wx.showModal({
-                    title: '抱歉！',
-                    content: '系统问题' + orderRes.data.rtnMessage,
-                  })
-                  break;
-              }
-            },
-            fail(err) {
-
-            }
-          })
-        }
-        break;
-    }
+      }
+    })
   }
 
 })

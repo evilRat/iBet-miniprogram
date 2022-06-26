@@ -1,22 +1,9 @@
 <!--pages/me/me.wxml-->
 <view class="container">
   <view class="userinfo">
-    <open-data class="user-avatarurl" type="userAvatarUrl"></open-data>
-    <open-data class="user-nickname" type="userNickName"></open-data>
-    <text class='user-name'>  {{user.name}}</text>
-  </view>
-  <view class="usermotto">
-    <view>
-      <view class='user-balance'>
-        <text>剩余额度：{{user.balance}}</text>
-      </view>
-      <view>
-        <button wx:if="{{!canIUse}}">请升级微信版本</button>
-        <view wx:else if>
-          <button class="me-button">充值</button>
-          <button class="me-button">提现</button>
-        </view>
-      </view>
-    </view>
+    <button plain open-type="chooseAvatar" style="border: none;" bind:chooseavatar="onChooseAvatar">
+      <image class="user-avatar" src="{{avatarUrl}}"></image>
+    </button>
+    <input type="nickname" class="weui-input" style="margin-top: 10px;" placeholder="请输入昵称" />
   </view>
 </view>

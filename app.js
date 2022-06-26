@@ -1,54 +1,30 @@
 //app.js
-import config from 'config.js';
-import { noServer } from './config';
 App({
   onLaunch: function() {
-    var that = this;
-    // 判断是否为无服务器，第一版先上线，没有server
-    // if(config.noServer) {
-    //   wx.reLaunch({
-    //     url: '/pages/experience/experience'
-    //   })
-    // }
-    // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-    console.log("app.js onLanch")
-
-    wx.getSetting({
+    let that = this
+    wx.cloud.init()
+    // 调用云函数获取用户信息
+    wx.cloud.callFunction({
+      name: 'login',
       success: function(res) {
-        console.log(res)
-        if (res.authSetting['scope.userInfo']) {
-          console.log("before getSetting isNotAuthorized=" + that.globalData.isNotAuthorized)
-          that.globalData.isNotAuthorized = false;
-          console.log("getSetting isNotAuthorized=" + that.globalData.isNotAuthorized)
-          if (that.getSettingCallback != null) {
-            that.getSettingCallback(that.globalData.isNotAuthorized)
-          }
-        } else {
-          console.log('scope.userInfo_fuck')
-          that.globalData.isNotAuthorized = true;
-          console.log('scope.userInfo_fucked')
-          if (that.getSettingCallback) {
-            console.log('scope.userInfo_else_callback')
-            that.getSettingCallback(that.globalData.isNotAuthorized)
-          }
-        }
-        
+        console.log("login cloud function res: " + JSON.stringify(res))
+        that.globalData.userInfo = res.result
+        console.log("globalData setting values: : " + JSON.stringify(that.globalData))
+        wx.setStorageSync("curOpenid", that.globalData.userInfo.openid)
       }
     })
   },
-  PrefixInteger: function(num, n) {
-    return(Array(n).join(0) + num).slice(-n);
+  getUuid: function () {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      var r = (Math.random() * 16) | 0,
+        v = c == 'x' ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
   },
 
   globalData: {
     userInfo: null,
-    isNotAuthorized: null,
-    userId: null,
-    currentSite: null
+    cloudEnvId: 'test-3ge6sdgq51a3723d',
+    cloudStorageId: '7465-test-3ge6sdgq51a3723d-1258271813',
   },
-  serverUrl: config.serverUrl,
-  noServer: config.noServer
 })

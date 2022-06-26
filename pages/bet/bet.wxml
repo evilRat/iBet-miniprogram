@@ -1,47 +1,7 @@
 <!--pages/bet/bet.wxml-->
-<text class='weui-cells__title' wx:if="{{!isShared}}">请投注:</text>
-<view class="betName">
-  <text>{{currentBet.betName}}</text>
-</view>
-
-<view wx:if="{{!isShared}}">
-  <!-- 3d -->
-  <view wx:if="{{currentBet == 3}}">
-    <view wx:for="123" wx:key="*this" wx:for-index="digitIndex">
-      <view>
-        <view>第{{item}}位:</view>
-        <view class="ballBox">
-          <view wx:for="0123456789" class="threeBalls" wx:key="*this">
-            <view class='redBall' hover-class='redBallSelected' data-digit="{{digitIndex}}" data-ballnum="{{item}}" bindtap='tap3DBall'>{{item}}</view>
-          </view>
-        </view>
-      </view>
-    </view>
-  </view>
-
-  <!-- 七乐彩或双色球 -->
-  <view wx:else>
-    <text wx:if="{{currentBet.redBallNum > 0}}">红球:</text>
-
-    <view class="ballBox">
-      <view wx:for="{{betLoopMax}}" wx:for-index="red_index" wx:if="{{red_index < currentBet.redBallRange}}" wx:key="*this">
-        <view class='redBall' hover-class='redBallSelected' data-ballnum="{{betLoopMax[red_index]}}" bindtap='tapRedBall'>{{betLoopMax[red_index]}}</view>
-      </view>
-    </view>
-
-    <text wx:if="{{currentBet.blueBallNum > 0}}">蓝球:</text>
-
-    <view class="ballBox">
-      <view wx:for="{{betLoopMax}}" wx:for-index="blue_index" wx:if="{{blue_index < currentBet.blueBallRange}}" wx:key="*this">
-        <view class='blueBall' hover-class='blueBallSelected' data-ballnum="{{betLoopMax[blue_index]}}" bindtap='tapBlueBall'>{{betLoopMax[blue_index]}}</view>
-      </view>
-    </view>
-  </view>
-</view>
-
 <view>
-  <view>
-    <text class='weui-cells__title'>已选择:</text>
+  <view style="line-height: 100px;">
+    <text class='weui-cells__title' style="font-size: 20px;">祝你好运！</text>
   </view>
   <text wx:if="{{currentBet.id != 3}}">红球:</text>
   <view class="ballBox">
@@ -78,7 +38,17 @@
       </view>
     </view>
   </view>
-  <button class="bet-button-red" bindtap="orderSubmit" wx:if="{{!noServer}}">投注</button>
-  <button class="bet-button-blue" open-type="share">分享</button>
+  <view wx:if="{{!!lotteryImg}}">
+    <text>凭证:</text>
+    <view style="text-align: center;">
+      <image src="{{lotteryImg}}" show-menu-by-longpress="true" style="width: 300px; height: 500px;"></image>
+    </view>
+  </view>
+  <button class="bet-button-red" bindtap="getRandom" wx:if="{{!isShared}}">再来一次</button>
+  <button class="bet-button-blue" open-type="share" data-info='0' wx:if="{{!isPrintShare}}">分享</button>
+  <button class="bet-button-blue" open-type="share" data-info='1' wx:if="{{!isPrintShare}}">帮我打印</button>
+  <button class="bet-button-blue" bindtap="upload" wx:if="{{isShared && isPrintShare && !lotteryImg}}">上传彩票</button>
+  <!-- 没有server，目前没法传递lotteryCode -->
+  <!-- <button class="bet-button-blue" bindtap="scan" wx:if="{{isShared && isPrintShare && !lotteryCode}}">上传彩票</button> -->
 
 </view>

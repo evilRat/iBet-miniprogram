@@ -1,42 +1,25 @@
 // pages/me/me.js
 const app = getApp()
-
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    user: {
-      name: "孔征",
-      balance: "8888",
-    },
-    canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    userInfo: {},
-    hasUserInfo: false
+    avatarUrl: null,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse) {
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    } else {
-      
-    }
+  },
+
+  onChooseAvatar(e) {
+    const { avatarUrl } = e.detail 
+    this.setData({
+      avatarUrl,
+    })
   },
 
   /**
