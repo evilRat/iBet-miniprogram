@@ -69,10 +69,5 @@ Page({
    */
   onShareAppMessage: function() {
 
-  },
-  help: function() {
-    wx.navigateTo({
-      url: '/pages/help/help'
-    })
   }
 })
