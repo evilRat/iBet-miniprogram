@@ -2,7 +2,8 @@
   "pages": [
     "pages/experience/experience",
     "pages/me/me",
-    "pages/bet/bet"
+    "pages/bet/bet",
+    "pages/generatedHtml/generatedHtml"
   ],
   "lazyCodeLoading": "requiredComponents",
   "window": {

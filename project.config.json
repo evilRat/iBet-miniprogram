@@ -38,10 +38,11 @@
   "libVersion": "2.4.2",
   "appid": "wxe4c70577dd6dd519",
   "projectname": "iBet",
-  "condition": {},
   "editorSetting": {
     "tabIndent": "insertSpaces",
     "tabSize": 2
   },
-  "cloudfunctionRoot": "cloudfunctions/"
+  "cloudfunctionRoot": "cloudfunctions/",
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
+  "condition": {}
 }
