@@ -2,12 +2,14 @@
 App({
   onLaunch: function() {
     let that = this
+    console.log("App onLaunch")
     wx.cloud.init()
     // 调用云函数获取用户信息
     wx.cloud.callFunction({
       name: 'login',
       success: function(res) {
         console.log("login cloud function res: " + JSON.stringify(res))
+        debugger
         that.globalData.userInfo = res.result
         console.log("globalData setting values: : " + JSON.stringify(that.globalData))
         wx.setStorageSync("curOpenid", that.globalData.userInfo.openid)

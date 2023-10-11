@@ -7,4 +7,7 @@
     <input type="nickname" class="weui-input" style="margin-top: 10px;" placeholder="请输入昵称" />
     <button style="color: red;" type="default" size="mini" bindtap="help">帮助</button>
   </view>
+  <!-- <view>
+    <button bindtap="toShareHtml" size="mini">share html</button>
+  </view> -->
 </view>
