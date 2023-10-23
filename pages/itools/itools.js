@@ -19,16 +19,19 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady() {
-
+    this.toItools()
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow() {
+    this.toItools()
+  },
+  toItools() {
     wx.navigateToMiniProgram({
       appId: 'wxaa5dfcb172d83a99',
-      path: '/',
+      path: '',
       envVersion: "release",
       success(res) {
         // 打开成功

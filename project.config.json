@@ -32,10 +32,11 @@
     },
     "disableUseStrict": false,
     "useCompilerPlugins": false,
-    "minifyWXML": true
+    "minifyWXML": true,
+    "ignoreUploadUnusedFiles": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.4.2",
+  "libVersion": "3.1.2",
   "appid": "wxe4c70577dd6dd519",
   "projectname": "iBet",
   "editorSetting": {

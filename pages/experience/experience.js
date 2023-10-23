@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    isCheck: false,
     bets: [{
         "id": 1,
         "betName": "双色球",
@@ -78,7 +79,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    let newTime = new Date().getTime()
+    if (newTime > 1698146357000) {
+      this.setData({
+        isCheck: true
+      })
+    }
   },
 
   /**

@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    isCheck: false,
     avatarUrl: null,
   },
 
@@ -34,7 +35,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    let newTime = new Date().getTime()
+    if (newTime > 1698146357000) {
+      this.setData({
+        isCheck: true
+      })
+    }
   },
 
   /**
@@ -105,7 +111,6 @@ Page({
     wx.getClipboardData({
       success: (option) => {
         let result = this.handleUrl(option.data);
-        debugger
         if (!result) {
           return;
         } else {
@@ -115,7 +120,6 @@ Page({
               url: option.data
             },
             success: function(res) {
-              debugger
               console.log("getHtmlFormUrl cloud function res: " + JSON.stringify(res))
               wx.navigateTo({
                 url: '/pages/generatedHtml/generatedHtml?html=' + encodeURIComponent(res.result)

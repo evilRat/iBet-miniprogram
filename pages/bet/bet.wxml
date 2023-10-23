@@ -46,8 +46,8 @@
   </view>
   <button class="bet-button-red" bindtap="getRandom" wx:if="{{!isShared}}">再来一次</button>
   <button class="bet-button-blue" open-type="share" data-info='0' wx:if="{{!isPrintShare}}">分享</button>
-  <button class="bet-button-blue" open-type="share" data-info='1' wx:if="{{!isPrintShare}}">帮我打印</button>
-  <button class="bet-button-blue" bindtap="upload" wx:if="{{isShared && isPrintShare && !lotteryImg}}">上传彩票</button>
+  <!-- <button class="bet-button-blue" open-type="share" data-info='1' wx:if="{{!isPrintShare}}">帮我打印</button>
+  <button class="bet-button-blue" bindtap="upload" wx:if="{{isShared && isPrintShare && !lotteryImg}}">上传彩票</button> -->
   <!-- 没有server，目前没法传递lotteryCode -->
   <!-- <button class="bet-button-blue" bindtap="scan" wx:if="{{isShared && isPrintShare && !lotteryCode}}">上传彩票</button> -->
   <ad unit-id="adunit-46c1ac44bc195bd5" ad-type="video" ad-theme="white"></ad>

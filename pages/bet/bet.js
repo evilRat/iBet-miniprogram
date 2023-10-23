@@ -413,7 +413,6 @@ Page({
       sourceType: ['album', 'camera'],
       success(res) {
         console.log("chooseMedia res:" + JSON.stringify(res))
-        debugger
         if (!!res && !!res.tempFiles && !!res.tempFiles[0] && !!res.tempFiles[0].tempFilePath) {
           wx.cloud.uploadFile({
             cloudPath: that.data.orderCode,
