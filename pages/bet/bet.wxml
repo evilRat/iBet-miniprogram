@@ -3,6 +3,7 @@
   <view style="line-height: 100px;">
     <text class='weui-cells__title' style="font-size: 20px;">祝你好运！</text>
   </view>
+  <view wx:if="{{isCheck}}">
   <text wx:if="{{currentBet.id != 3}}">红球:</text>
   <view class="ballBox">
     <view wx:for="{{choseRedBalls}}" wx:for-index="choseRedBallIndex" wx:key="*this">
@@ -46,6 +47,7 @@
   </view>
   <button class="bet-button-red" bindtap="getRandom" wx:if="{{!isShared}}">再来一次</button>
   <button class="bet-button-blue" open-type="share" data-info='0' wx:if="{{!isPrintShare}}">分享</button>
+  </view>
   <!-- <button class="bet-button-blue" open-type="share" data-info='1' wx:if="{{!isPrintShare}}">帮我打印</button>
   <button class="bet-button-blue" bindtap="upload" wx:if="{{isShared && isPrintShare && !lotteryImg}}">上传彩票</button> -->
   <!-- 没有server，目前没法传递lotteryCode -->

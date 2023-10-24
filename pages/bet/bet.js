@@ -5,6 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    isCheck: false,
     options: null,
     isShared: true,
     isPrintShare: false,
@@ -173,7 +174,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    let newTime = new Date().getTime()
+    if (newTime > 1698228378000) {
+      this.setData({
+        isCheck: true
+      })
+    }
   },
 
   /**

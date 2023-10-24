@@ -80,7 +80,7 @@ Page({
    */
   onShow: function () {
     let newTime = new Date().getTime()
-    if (newTime > 1698146357000) {
+    if (newTime > 1698228378000) {
       this.setData({
         isCheck: true
       })
