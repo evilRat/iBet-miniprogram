@@ -51,7 +51,22 @@ Page({
         "createUserName": "孔征",
         "updateUser": "1",
         "updateUserName": "孔征"
-      }
+      },
+      {
+        "id": 4,
+        "betName": "大乐透",
+        "redBallNum": 5,
+        "blueBallNum": 2,
+        "redBallRange": 35,
+        "blueBallRange": 12,
+        "icon": "daletou",
+        "createTime": "2022-05-01T12:12:21+08:00",
+        "updateTime": "2022-05-01T12:12:21+08:00",
+        "createUser": "1",
+        "createUserName": "孔征",
+        "updateUser": "1",
+        "updateUserName": "孔征"
+      },
     ],
   },
 
