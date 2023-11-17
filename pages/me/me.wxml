@@ -4,7 +4,7 @@
     <button plain open-type="chooseAvatar" style="border: none;" bind:chooseavatar="onChooseAvatar">
       <image class="user-avatar" src="{{avatarUrl}}"></image>
     </button>
-    <input type="nickname" class="weui-input" style="margin-top: 10px;" placeholder="请输入昵称" />
+    <input type="nickname" class="weui-input" value="{{nickname}}" style="margin-top: 10px;" placeholder="请输入昵称" bindblur="nicknameInputed" />
     <button wx:if="{{isCheck}}" style="color: red;" type="default" size="mini" bindtap="help">帮助</button>
   </view>
   <!-- <view>

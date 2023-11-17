@@ -9,7 +9,13 @@
   <view>
     <text class="weui-cells__title">试试手气吧！</text>
   </view>
-  <view wx:if="{{!isCheck}}" style="color: red;">系统维护中，请稍后再试，感谢您的支持！</view>
+  <!-- <view wx:if="{{!isCheck}}" style="color: red;">
+    <text>
+      系统维护中，请稍后再试，感谢您的支持！\n 
+      恢复时间：{{endTime}} \n
+      倒计时：{{seconds}}
+    </text>
+  </view> -->
   <view wx:if="{{isCheck}}" wx:for="{{bets}}" wx:for-index="betIndex" wx:key="id">
     <view>
       <text hidden='true' class='betType-text'>{{bets[betIndex].betName}}</text>

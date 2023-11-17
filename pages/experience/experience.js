@@ -7,6 +7,8 @@ Page({
    */
   data: {
     isCheck: false,
+    endTime: null,
+    seconds: 0,
     bets: [{
         "id": 1,
         "betName": "双色球",
@@ -95,10 +97,33 @@ Page({
    */
   onShow: function () {
     let newTime = new Date().getTime()
-    if (newTime > 1698228378000) {
+    if (newTime > app.globalData.endTime) {
       this.setData({
         isCheck: true
       })
+    } else {
+      // 倒计时
+      let date = new Date(app.globalData.endTime);
+      this.setData({
+        endTime: date.getFullYear()+
+        "/"+(date.getMonth()+1)+
+        "/"+date.getDate()+
+        " "+date.getHours()+
+        ":"+date.getMinutes()+
+        ":"+date.getSeconds(),
+      })
+      console.log(this.data.endTime)
+      setInterval(() => {
+        let leftTime = app.globalData.endTime - new Date()
+        let day = Math.floor(leftTime/1000/60/60/24)
+        let hour = Math.floor(leftTime/1000/60/60%24)
+        let minute = Math.floor(leftTime/1000/60%60)
+        let second = Math.floor(leftTime/1000%60)
+        let time = day + "天" + hour + "时" + minute + "分" + second + "秒";
+        this.setData({
+          seconds: time
+        })
+      }, 1000)
     }
   },
 

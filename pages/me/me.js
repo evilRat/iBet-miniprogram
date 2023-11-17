@@ -8,20 +8,34 @@ Page({
   data: {
     isCheck: false,
     avatarUrl: null,
+    nickname: null,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {},
+  onLoad: function (options) {
+    debugger
+    this.setData({
+      nickname: wx.getStorageSync('nickname'),
+      avatarUrl: wx.getStorageSync('avatarUrl')
+    })
+  },
 
   onChooseAvatar(e) {
+    console.log("onChooseAvatar:" + JSON.stringify(e))
     const {
       avatarUrl
     } = e.detail
     this.setData({
       avatarUrl,
     })
+    wx.setStorageSync("avatarUrl", avatarUrl)
+  },
+
+  nicknameInputed(e) {
+    console.log("nicknameInputed:" + JSON.stringify(e))
+    wx.setStorageSync("nickname", e.detail.value)
   },
 
   /**
@@ -36,7 +50,7 @@ Page({
    */
   onShow: function () {
     let newTime = new Date().getTime()
-    if (newTime > 1698228378000) {
+    if (newTime > app.globalData.endTime) {
       this.setData({
         isCheck: true
       })

@@ -27,5 +27,8 @@ App({
     userInfo: null,
     cloudEnvId: 'test-3ge6sdgq51a3723d',
     cloudStorageId: '7465-test-3ge6sdgq51a3723d-1258271813',
+    nickname: '',
+    avatarUrl: '',
+    endTime: 1700303441000,
   },
 })
